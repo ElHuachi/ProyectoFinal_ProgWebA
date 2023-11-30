@@ -6,7 +6,7 @@ class Conexion
 {
     
     private static $servidor = 'localhost' ;
-    private static $db = 'CCUP' ;
+    private static $db = 'Coding' ;
     private static $usuario = 'root';
     private static $password = 'root';
     private static $puerto = '3306';
