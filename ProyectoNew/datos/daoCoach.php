@@ -1,18 +1,16 @@
 <?php
 //importa la clase conexión y el modelo para usarlos
 require_once 'conexion.php';
-
 require_once '../modelos/coach.php';
+require_once '../modelos/equipos.php';
+require_once '../modelos/instituciones.php';
 
-
-class DAOUsuario
+class DAOCoach
 {
-
-    private $conexion;
-
     /**
      * Permite obtener la conexión a la BD
      */
+    private $conexion;
     private function conectar()
     {
         try {
@@ -32,25 +30,26 @@ class DAOUsuario
             $this->conectar();
 
             $lista = array();
-            /*Se arma la sentencia sql para seleccionar todos los registros de la base de datos*/
-            $sentenciaSQL = $this->conexion->prepare("SELECT id,nombre,correo,institucion FROM Usuarios");
+            /* Se arma la sentencia SQL para seleccionar todos los registros de la base de datos */
+            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM Coach");
 
-            //Se ejecuta la sentencia sql, retorna un cursor con todos los elementos
+            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
             $sentenciaSQL->execute();
 
-            //$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
             $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            /*Podemos obtener un cursor (resultado con todos los renglones como 
-            un arreglo de arreglos asociativos o un arreglo de objetos*/
-            /*Se recorre el cursor para obtener los datos*/
-            foreach ($resultado as $fila) {
+            /* Podemos obtener un cursor (resultado con todos los renglones como 
+            un arreglo de arreglos asociativos o un arreglo de objetos */
+            /* Se recorre el cursor para obtener los datos */
+            foreach ($resultado as $row) {
                 $obj = new Coach();
-                $obj->id = $fila->id;
-                $obj->nombre = $fila->nombre;
-                $obj->correo = $fila->correo;
-                $obj->institucion= $fila->institucion;
-               
-                //Agrega el objeto al arreglo, no necesitamos indicar un índice, usa el próximo válido
+
+                $obj->IdC = $row->id;
+                $obj->NombreC = $row->NombreC;
+                $obj->CorreoC = $row->CorreoC;
+                $obj->Institucion = $row->NombreI;
+                $obj->idTipo = $row->idTipo;
+                $obj->PassCo = $row->PassCo;
+
                 $lista[] = $obj;
             }
 
@@ -66,33 +65,28 @@ class DAOUsuario
     /**
      * Metodo que obtiene un registro de la base de datos, retorna un objeto  
      */
-    public function obtenerUno($id)
+    public function obtenerUno($IdE)
     {
         try {
             $this->conectar();
 
-            //Almacenará el registro obtenido de la BD
             $obj = null;
 
-            $sentenciaSQL = $this->conexion->prepare("SELECT id,nombre,correo,institucion FROM RegistroCoach WHERE id=?");
-            //Se ejecuta la sentencia sql con los parametros dentro del arreglo 
-            $sentenciaSQL->execute([$id]);
+            $sentenciaSQL = $this->conexion->prepare("SELECT IdE,NombreEquipo,Estudiante1,Estudiante2,Estudiante3,Coach,NombreI FROM Equipos WHERE IdE=?");
+            $sentenciaSQL->execute(array($IdE));
+            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
 
-            /*Obtiene los datos*/
-            $fila = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
+            if ($resultado) {
+                $obj = new Equipos();
 
-            $obj = new Coach();
-
-            $obj->id = $fila->id;
-            $obj->nombre = $fila->nombre;
-            $obj->apellido1 = $fila->apellido1;
-            $obj->apellido2 = $fila->apellido2;
-            $obj->email = $fila->email;
-            $obj->fechaNac = DateTime::createFromFormat('Y-m-d', $fila->fechaNac);
-            $obj->genero = $fila->genero;
-            $obj->edoCivil = $fila->estadoCivil;
-            $obj->intereses = $fila->intereses ? explode(",", $fila->intereses) : array();
-
+                $obj->IdE = $resultado->IdE;
+                $obj->NombreEquipo = $resultado->NombreEquipo;
+                $obj->Estudiante1 = $resultado->Estudiante1;
+                $obj->Estudiante2 = $resultado->Estudiante2;
+                $obj->Estudiante3 = $resultado->Estudiante3;
+                $obj->Coach = $resultado->Coach;
+                $obj->NombreI = $resultado->NombreI;
+            }
             return $obj;
         } catch (Exception $e) {
             return null;
@@ -100,8 +94,39 @@ class DAOUsuario
             Conexion::desconectar();
         }
     }
+    public function obtenerInstitucion()
+    {
+        try {
+            $this->conectar();
 
-    public function autenticar($correo, $password)
+            $lista = array();
+            /*Se arma la sentencia sql para seleccionar todos los registros de la base de datos*/
+            $sentenciaSQL = $this->conexion->prepare("SELECT NombreI FROM Instituciones");
+
+            //Se ejecuta la sentencia sql, retorna un cursor con todos los elementos
+            $sentenciaSQL->execute();
+
+            //$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
+            /*Podemos obtener un cursor (resultado con todos los renglones como 
+            un arreglo de arreglos asociativos o un arreglo de objetos*/
+            /*Se recorre el cursor para obtener los datos*/
+            foreach ($resultado as $row) {
+                $obj = new Instituciones();
+
+                $obj->NombreI = $row->NombreI;
+
+                $lista[] = $obj;
+            }
+
+            return $lista;
+        } catch (PDOException $e) {
+            return null;
+        } finally {
+            Conexion::desconectar();
+        }
+    }
+    public function autenticar($CorreoC, $PassCo)
     {
         try {
             $this->conectar();
@@ -109,21 +134,19 @@ class DAOUsuario
             //Almacenará el registro obtenido de la BD
             $obj = null;
 
-            $sentenciaSQL = $this->conexion->prepare("SELECT id,nombre,apellido1,apellido2 FROM usuarios WHERE email=? AND password=sha2(?,224)");
+            $sentenciaSQL = $this->conexion->prepare("SELECT IdE,NombreEquipo FROM Equipos WHERE Coach=? AND password=sha2(?,224)");
             //Se ejecuta la sentencia sql con los parametros dentro del arreglo 
-            $sentenciaSQL->execute(array($correo, $password));
+            $sentenciaSQL->execute(array($CorreoC, $PassCo));
 
             /*Obtiene los datos*/
             $fila = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
             if ($fila) {
-                $obj = new Usuario();
+                $obj = new Equipos();
 
-                $obj->id = $fila->id;
-                $obj->nombre = $fila->nombre;
-                $obj->apellido1 = $fila->apellido1;
-                $obj->apellido2 = $fila->apellido2;
-
-                return $obj;
+                $obj->IdE = $fila->IdE;
+                $obj->NombreEquipo = $fila->NombreEquipo;
+            } else {
+                $obj = null;
             }
             return null;
         } catch (Exception $e) {
@@ -136,13 +159,13 @@ class DAOUsuario
     /**
      * Elimina el usuario con el id indicado como parámetro
      */
-    public function eliminar($id)
+    public function eliminar($IdE)
     {
         try {
             $this->conectar();
 
-            $sentenciaSQL = $this->conexion->prepare("DELETE FROM usuarios WHERE id = ?");
-            $resultado = $sentenciaSQL->execute(array($id));
+            $sentenciaSQL = $this->conexion->prepare("DELETE FROM Equipos WHERE IdE = ?");
+            $resultado = $sentenciaSQL->execute(array($IdE));
             return $resultado;
         } catch (PDOException $e) {
             //Si quieres acceder expecíficamente al numero de error
@@ -153,47 +176,36 @@ class DAOUsuario
         }
     }
 
-    function calcularEdad($fechaNac)
-    {
-        $h = new DateTime();
-        return $h->diff($fechaNac)->y;
-    }
+
 
     /**
-     * Función para editar al empleado de acuerdo al objeto recibido como parámetro
+     * Función para editar a los equipos de acuerdo al objeto recibido como parámetro
      */
-    public function editar(Usuario $obj)
+    public function editar(Equipos $obj)
     {
         try {
-            $sql = "UPDATE usuarios
-                    SET
-                    nombre = ?,
-                    apellido1 = ?,
-                    apellido2 = ?,
-                    email = ?,
-                    fechaNac = ?,
-                    edad = ?,
-                    genero = ?,
-                    intereses = ?,
-                    estadoCivil = ?,
-                    password = sha2(?,224)
-                    WHERE id = ?;";
+            $sql = "UPDATE Equipos
+            SET
+            NombreEquipo = ?,
+            Estudiante1 = ?,
+            Estudiante2 = ?,
+            Estudiante3 = ?,
+            Coach = ?,
+            NombreI = ?
+            WHERE IdE = ?;";
 
             $this->conectar();
 
             $sentenciaSQL = $this->conexion->prepare($sql);
             $sentenciaSQL->execute(
                 array(
-                    $obj->nombre,
-                    $obj->apellido1,
-                    $obj->apellido2,
-                    $obj->email,
-                    $obj->fechaNac,
-                    $this->calcularEdad($obj->fechaNac),
-                    $obj->genero = implode(",", $obj->intereses),
-                    $obj->edoCivil,
-                    $obj->password,
-                    $obj->id
+                    $obj->NombreEquipo,
+                    $obj->Estudiante1,
+                    $obj->Estudiante2,
+                    $obj->Estudiante3,
+                    $obj->Coach,
+                    $obj->NombreI,
+                    $obj->IdE
                 )
             );
             return true;
@@ -210,46 +222,34 @@ class DAOUsuario
     /**
      * Agrega un nuevo usuario de acuerdo al objeto recibido como parámetro
      */
-    public function agregar(Usuario $obj)
+    public function agregar(Equipos $obj)
     {
         $clave = 0;
         try {
-            $sql = "INSERT INTO Usuarios
-                (nombre,
-                apellido1,
-                apellido2,
-                email,
-                fechaNac,
-                edad,
-                genero,
-                intereses,
-                estadoCivil,
-                password)
+            $sql = "INSERT INTO Equipos
+                (NombreEquipo,
+                Estudiante1,
+                Estudiante2,
+                Estudiante3,
+                Coach,
+                NombreI)
                 VALUES
-                (:nombre,
-                :apellido1,
-                :apellido2,
-                :email,
-                :fechaNac,
-                :edad,
-                :genero,
-                :intereses,
-                :estadoCivil,
-                sha2(:password,224));";
+                (:NombreEquipo,
+                :Estudiante1,
+                :Estudiante2,
+                :Estudiante3,
+                :Coach,
+                :NombreI);";
 
             $this->conectar();
             $this->conexion->prepare($sql)
                 ->execute(array(
-                    ':nombre' => $obj->nombre,
-                    ':apellido1' => $obj->apellido1,
-                    ':apellido2' => $obj->apellido2,
-                    ':email' => $obj->email,
-                    ':fechaNac' => $obj->fechaNac->format('Y-m-d'),
-                    ':edad' => $this->calcularEdad($obj->fechaNac),
-                    ':genero' => $obj->genero,
-                    ':intereses' => implode(",", $obj->intereses),
-                    ':estadoCivil' => $obj->edoCivil,
-                    ':password' => $obj->password
+                    ':nombreEquipo' => $obj->NombreEquipo,
+                    ':estudiante1' => $obj->Estudiante1,
+                    ':estudiante2' => $obj->Estudiante2,
+                    ':estudiante3' => $obj->Estudiante3,
+                    ':coach' => $obj->Coach,
+                    ':nombreI' => $obj->NombreI
                 ));
 
             $clave = $this->conexion->lastInsertId();

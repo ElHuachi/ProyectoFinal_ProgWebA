@@ -9,7 +9,7 @@ class Conexion
     private static $db = 'Coding' ;
     private static $usuario = 'root';
     private static $password = 'root';
-    private static $puerto = '3306';
+    private static $puerto = '3006';
     
     //Referencia de la conexión a la BD para que 
     //si ocupamos transacciones podamos usar siempre la misma

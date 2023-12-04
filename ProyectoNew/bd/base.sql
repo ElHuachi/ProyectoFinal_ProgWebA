@@ -1,21 +1,22 @@
 create database Coding;
-
+-- drop database Coding;
 use Coding;
 
 create table
     Tipo(
-        idTipo char(2) not null,
+        id char(2) not null,
         Nombre varchar(25) not null,
         primary key (id)
     );
 
 create table
     Administradores (
-        id int auto_increment not null,
+        idA int auto_increment not null,
+        idTipo char(2) not null,
         UsuarioAd varchar(25) not null,
         PassAd varchar(18) not null,
-        IdTipo char(2) not null,
-        primary key (Tipo)
+        primary key (idA),
+        foreign key (idTipo) references Tipo (id)
     );
 
 create table
@@ -41,11 +42,12 @@ create table
         CorreoC varchar(25) not null,
         Institucion varchar(25) not null,
         idTipo char(2) not null,
-        primary key (id),
-        foreign key (Tipo) references Administradores (Tipo),
+        PassCo varchar (25) not null,
+        primary key (idC),
+        foreign key (idTipo) references Tipo (id),
         foreign key (Institucion) references Instituciones (NombreI)
     );
-
+    
 create table
     Equipos (
         IdE int auto_increment,
@@ -53,9 +55,12 @@ create table
         Estudiante1 varchar(25) not null,
         Estudiante2 varchar(25) not null,
         Estudiante3 varchar(25) not null,
+        Institucion varchar(25) not null,
         Coach varchar(25) not null,
         NombreI varchar(50) not null,
-        foreign key (Institucion) references Instituciones
+        FotoEquipo VARCHAR(255),
+        primary key (IdE),
+        foreign key (Institucion) references Instituciones (NombreI)
     );
 
 create table Auxiliares (
@@ -64,5 +69,41 @@ create table Auxiliares (
         UsuarioAx varchar(25) not null,
         PassAx varchar(18) not null,
         idTipo char(2) not null,
-        foreign key (Tipo) references Tipo (idTipo)
+        primary key (IdAx),
+        foreign key (idTipo) references Tipo (id)
     );
+insert into Tipo values ('Ax', 'Auxiliar');
+insert into Tipo values ('Co', 'Coach');
+insert into Tipo values ('Ad', 'Administrador');
+insert into Administradores values (default, 'Admin',sha2('123456',256),'Ad');
+select * from Tipo;
+SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd, Administradores.PassAd
+FROM Administradores
+JOIN Tipo ON Administradores.idTipo = Tipo.id;
+
+-- Insertar datos en la tabla Instituciones
+INSERT INTO Instituciones VALUES ('Institucion1');
+INSERT INTO Instituciones VALUES ('Institucion2');
+
+-- Insertar datos en la tabla Concursos
+INSERT INTO Concursos (NombreC, FechaC, HoraC, LugarC, Institucion) VALUES ('Concurso1', '2023-01-01', '12:00:00', 'Lugar1', 'Institucion1');
+INSERT INTO Concursos (NombreC, FechaC, HoraC, LugarC, Institucion) VALUES ('Concurso2', '2023-02-01', '14:00:00', 'Lugar2', 'Institucion2');
+
+-- Insertar datos en la tabla Coach
+INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach1', 'coach1@example.com', 'Institucion1', 'Co', sha2('password', 256));
+INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach2', 'coach2@example.com', 'Institucion2', 'Co', sha2('password', 256));
+
+-- Insertar datos en la tabla Equipos
+INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1');
+INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach) VALUES ('Equipo2', 'Estudiante4', 'Estudiante5', 'Estudiante6', 'Institucion2', 'Coach2');
+
+-- Insertar datos en la tabla Auxiliares
+INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar1', 'aux1', sha2('password', 256), 'Ax');
+INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar2', 'aux2', sha2('password', 256), 'Ax');
+
+-- Verificar los datos insertados
+SELECT * FROM Instituciones;
+SELECT * FROM Concursos;
+SELECT * FROM Coach;
+SELECT * FROM Equipos;
+SELECT * FROM Auxiliares;

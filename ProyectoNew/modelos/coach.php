@@ -1,10 +1,10 @@
 <?php
-    class Coach{
-        public $id=0;
-        public $nombre="";
-        public $correo="";
-        public $institucion="";
-        public $passw="";
-
+    class coach{
+        public $IdC=0;
+        public $NombreC="";
+        public $CorreoC="";
+        public $Institucion="";
+        public $idTipo="";
+        public $PassCo="";
     }
 ?>
