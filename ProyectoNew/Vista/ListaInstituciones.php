@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de administracion de Concursos</title>
+  <title>Sistema de administracion de Instituciones</title>
+  <link rel="stylesheet" href="../Principal/estilos/estilos.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
@@ -20,29 +21,30 @@
 <body>
   <?php
   require('../Principal/menu.php');
- // require_once('');
-  //$dao = new DAOUsuario();
-  //$listaUsuarios = $dao->obtenerTodos();
+  require_once('../datos/DAOCoach.php');
+  $dao = new DAOCoach();
+  $instituciones = $dao->obtenerInstitucion();
   ?>
   <div class="container">
     <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>
-            <th>Instituciones</th>
+          <th>Instituciones</th>
+          <th>Operaciones</th>
         </tr>
       </thead>
       <tbody>
         <?php
-      /*  foreach ($listaUsuarios as $usuario) {
-          echo "<tr><td>" . trim($usuario->apellido1 . " " . $usuario->apellido2) . " " . $usuario->nombre . "</td>" .
-            "<td>" . $usuario->email . "</td>" .
-            "<td>" . ($usuario->genero == "M" ? "Masculino" : "Femenino") . "</td>" .
-            "<td>" .
-            "<button type='button' class='btn btn-primary btn-editar' data-id='" . $usuario->id . "'>Editar</button>" .
-            "<button type='button' class='btn btn-danger btn-eliminar' onclick='confirmar(this)' data-id='" . $usuario->id . "'>Eliminar</button>" .
-            "</td></tr>";
-        }*/
+        foreach ($instituciones as $institucion) {
+          echo "<tr>",
+          "<td>" . $institucion->NombreI . "</td>",
+          "<td>",
+          "<a class='btn btn-primary' href='../Login/RegistroUsuario.php?id=" . $institucion->NombreI . "'>Editar</a>",
+          "<button class='btn btn-danger' onclick='confirmar(" . $institucion->NombreI . "\")'>Eliminar</button>",
+          "</td>",
+          "</tr>";
+        }
         ?>
       </tbody>
     </table>

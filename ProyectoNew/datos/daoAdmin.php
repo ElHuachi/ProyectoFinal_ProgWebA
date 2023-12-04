@@ -209,5 +209,82 @@ class DaoAdmin
         }
     }
     
+    public function obtenerUno(){
+        try {
+            $this->conectar();
+    
+            $obj = null;
+    
+            // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
+            $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
+                                                    FROM Administradores
+                                                    JOIN Tipo ON Administradores.idTipo = Tipo.id
+                                                    WHERE Administradores.idA = ?");
+    
+            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
+            $sentenciaSQL->execute(array($_SESSION["idA"]));
+    
+            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
+    
+            // Se recorre el cursor para obtener los datos
+            if ($resultado) {
+                // Se crea un objeto tipo stdClass para almacenar los datos
+                $obj = new stdClass();
+    
+                // Se asignan los valores del resultado al objeto
+                $obj->idA = $resultado->idA;
+                $obj->Tipo = $resultado->Tipo;
+                $obj->UsuarioAd = $resultado->UsuarioAd;
+            }
+    
+            return $obj;
+        } catch (PDOException $e) {
+            // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
+            echo "Error: " . $e->getMessage();
+            return null;
+        } finally {
+            // Siempre desconecta después de realizar la operación
+            Conexion::desconectar();
+        }
+    }
+
+    public function autenticar(){
+        try {
+            $this->conectar();
+    
+            $obj = null;
+    
+            // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
+            $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
+                                                    FROM Administradores
+                                                    JOIN Tipo ON Administradores.idTipo = Tipo.id
+                                                    WHERE Administradores.idA = ?");
+    
+            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
+            $sentenciaSQL->execute(array($_SESSION["idA"]));
+    
+            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
+    
+            // Se recorre el cursor para obtener los datos
+            if ($resultado) {
+                // Se crea un objeto tipo stdClass para almacenar los datos
+                $obj = new stdClass();
+    
+                // Se asignan los valores del resultado al objeto
+                $obj->idA = $resultado->idA;
+                $obj->Tipo = $resultado->Tipo;
+                $obj->UsuarioAd = $resultado->UsuarioAd;
+            }
+    
+            return $obj;
+        } catch (PDOException $e) {
+            // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
+            echo "Error: " . $e->getMessage();
+            return null;
+        } finally {
+            // Siempre desconecta después de realizar la operación
+            Conexion::desconectar();
+        }
+    }
 
 }

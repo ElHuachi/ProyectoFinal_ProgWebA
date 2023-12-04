@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de registro de equipos para coding cup</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="../Principal/estilos/estilos.css">
   <link rel="stylesheet" href="dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
 
@@ -21,12 +20,12 @@
 <body>
   <?php
   require('../Principal/menu.php');
- // require_once('');
+  require_once('../Datos/daoEquipos.php');
   $dao = new DAOEquipos();
   $listaEquipos = $dao->obtenerTodos();
   ?>
   <div class="container">
-    <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>
+    <a class="btn btn-success mt-5 mb-3" href="../Login/Equipos.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -34,24 +33,26 @@
           <th>Integrantes</th>
           <th>Coach</th>
           <th>Institución</th>
-          <th><input type="checkbox" id="check">   Aprobado</th>
+          <th><input type="checkbox" id="check"> Aprobado</th>
         </tr>
       </thead>
       <tbody>
-      <?php
+        <?php
         if ($listaEquipos) {
-          foreach ($listaEquipos as $value) {
-              echo "<tr><td>" . $value->NombreEquipo . "</td>",
-                  "<td>" . $value->Estudiante1 . "</td>",
-                  "<td>" . $value->Coach . "</td>",
-                  "<td>" . $value->NombreI . "</td>",
-                  "<td>",
-                  "</td>",
-                  "</tr>";
+          foreach ($listaEquipos as $equipo) {
+            echo "<tr><td>" . $equipo->getNombreEquipo() . "</td>",
+            "<td>" . $equipo->getEstudiante1() . "<br>"
+              . $equipo->getEstudiante2() . "<br>"
+              . $equipo->getEstudiante3() . "</td>",
+            "<td>" . $equipo->getCoach() . "</td>",
+            "<td>" . $equipo->getNombreI() . "</td>",
+            "<td>" . $equipo->getAprobado() . "</td>",
+            "</td>",
+            "</tr>";
           }
-      } else {
-        echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
-      }
+        } else {
+          echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+        }
         ?>
       </tbody>
     </table>

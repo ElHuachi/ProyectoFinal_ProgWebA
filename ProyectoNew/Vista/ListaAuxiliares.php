@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
-
+  <link rel="icon" href="https://lh5.googleusercontent.com/TZGZLyLItpVbRjj8C-y7iwKn9F7-nJSgyS3vjtNJBM3LG2Dqr9xKYafZc-alHwjoUkx_98mEEoLddVv3Oq73Bb6udZgeJ-u5dW34RFYe157wU4J_">
   <style>
     .btn-verde {
       background-color: rgb(8, 218, 148) !important;
@@ -20,32 +20,37 @@
 <body>
   <?php
   require('../Principal/menu.php');
- // require_once('');
-  //$dao = new DAOUsuario();
-  //$listaUsuarios = $dao->obtenerTodos();
+  require('../datos/daoAux.php');
+  session_start();
+  $daoAux = new DaoAux();
+  $data = $daoAux->obtenerTodosPermisos();
   ?>
   <div class="container">
     <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>
-            <th>Concursos Activos</th>
-            <th>Concursos Pasados</th>
-            <th>Concursos Futuros</th>
-            <th>Fechas</th>
+          <th>Id</th>
+          <th>Usuario</th>
+          <th>Tipo de permisos</th>
+          <th>Operaciones</th>
         </tr>
       </thead>
       <tbody>
         <?php
-      /*  foreach ($listaUsuarios as $usuario) {
-          echo "<tr><td>" . trim($usuario->apellido1 . " " . $usuario->apellido2) . " " . $usuario->nombre . "</td>" .
-            "<td>" . $usuario->email . "</td>" .
-            "<td>" . ($usuario->genero == "M" ? "Masculino" : "Femenino") . "</td>" .
-            "<td>" .
-            "<button type='button' class='btn btn-primary btn-editar' data-id='" . $usuario->id . "'>Editar</button>" .
-            "<button type='button' class='btn btn-danger btn-eliminar' onclick='confirmar(this)' data-id='" . $usuario->id . "'>Eliminar</button>" .
-            "</td></tr>";
-        }*/
+        if ($data) {
+          foreach ($data as $value) {
+              echo "<tr><td>" . $value->idAx . "</td>",
+                  "<td>" . $value->UsuarioAx . "</td>",
+                  "<td>" . $value->Tipo . "</td>",
+                  "<td>",
+                  "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $value->IdAx . ",\"" . $value->UsuarioAx . "\")'>Eliminar</button>",
+                  "</td>",
+                  "</tr>";
+          }
+      } else {
+          echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+      }
         ?>
       </tbody>
     </table>
@@ -85,18 +90,16 @@
     </div>
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
-  <script src="dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="dt/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script src="dt/Buttons-2.4.2/js/dataTables.buttons.min.js"></script>
-  <script src="dt/Buttons-2.4.2/js/buttons.bootstrap5.min.js"></script>
-  <script src="dt/JSZip-3.10.1/jszip.min.js"></script>
-  <script src="dt/pdfmake-0.2.7/pdfmake.min.js"></script>
-  <script src="dt/pdfmake-0.2.7/vfs_fonts.js"></script>
-  <script src="dt/Buttons-2.4.2/js/buttons.html5.min.js"></script>
-  <script src="dt/Buttons-2.4.2/js/buttons.print.min.js"></script>
-  <script src="dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
-  <script src="Js/ListaConcursos.js"></script>
+    <script src="dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
+    <script src="dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="dt/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="dt/Buttons-2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="dt/Buttons-2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="dt/JSZip-3.10.1/jszip.min.js"></script>
+    <script src="dt/pdfmake-0.2.7/pdfmake.min.js"></script>
+    <script src="dt/pdfmake-0.2.7/vfs_fonts.js"></script>
+    <script src="dt/Buttons-2.4.2/js/buttons.html5.min.js"></script>
+    <script src="dt/Buttons-2.4.2/js/buttons.print.min.js"></script>
+    <script src="dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
 </body>
-
 </html>

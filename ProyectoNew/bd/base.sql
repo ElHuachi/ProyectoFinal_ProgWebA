@@ -57,8 +57,8 @@ create table
         Estudiante3 varchar(25) not null,
         Institucion varchar(25) not null,
         Coach varchar(25) not null,
-        NombreI varchar(50) not null,
         FotoEquipo VARCHAR(255),
+        Aprobado int not null,
         primary key (IdE),
         foreign key (Institucion) references Instituciones (NombreI)
     );
@@ -75,7 +75,7 @@ create table Auxiliares (
 insert into Tipo values ('Ax', 'Auxiliar');
 insert into Tipo values ('Co', 'Coach');
 insert into Tipo values ('Ad', 'Administrador');
-insert into Administradores values (default, 'Admin',sha2('123456',256),'Ad');
+insert into Administradores values (default, 'Admin','Ad',sha2('123456',256));
 select * from Tipo;
 SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd, Administradores.PassAd
 FROM Administradores
@@ -94,8 +94,8 @@ INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach
 INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach2', 'coach2@example.com', 'Institucion2', 'Co', sha2('password', 256));
 
 -- Insertar datos en la tabla Equipos
-INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1');
-INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach) VALUES ('Equipo2', 'Estudiante4', 'Estudiante5', 'Estudiante6', 'Institucion2', 'Coach2');
+INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1', '', 1);
+INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo2', 'Estudiante4', 'Estudiante5', 'Estudiante6', 'Institucion2', 'Coach2', '', 0);
 
 -- Insertar datos en la tabla Auxiliares
 INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar1', 'aux1', sha2('password', 256), 'Ax');

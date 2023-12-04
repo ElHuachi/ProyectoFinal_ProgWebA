@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="estilos/estilos.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="icon" href="https://lh5.googleusercontent.com/TZGZLyLItpVbRjj8C-y7iwKn9F7-nJSgyS3vjtNJBM3LG2Dqr9xKYafZc-alHwjoUkx_98mEEoLddVv3Oq73Bb6udZgeJ-u5dW34RFYe157wU4J_">
   <title>CODING CUP 2023</title>
 </head>
 
@@ -36,38 +35,57 @@
   <div>
     <img src="IMGS/ALCON2.jpg" alt="ALCON2" class="content-image center" />
   </div>
-  <div class="tyJCtd mGzaTb Depvyb baZpAe">
-    <p dir="ltr" class="zfr3Q CDt4Ke " style="text-align: center;"><span class="puwcIf C9DxTc " style="font-family: Bitter, Arial; font-weight: 700; vertical-align: baseline;">REGLAMENTO</span></p>
-    <ul class="n8H08c UVNKR " style="list-style-type: square; margin-left: 0; margin-right: 0; padding: 0;">
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Podrán participar estudiantes inscritos formalmente en alguna institución de nivel superior del Estado de Guanajuato.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Cada equipo deberá estar formado por 3 integrantes de una misma institución. Solo se permiten equipos con 3 integrantes.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Cada equipo deberá tener un coach quien será el responsable de registrar. El coach deberá ser un docente o directivo de su institución.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Está prohibido el uso de cualquier herramienta de Inteligencia Artificial (chatGTP u otro).</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">No se permite navegar en ningún sitio, excepto en la plataforma del concurso.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Solo se permite el uso de la computadora asignada al equipo. No se permite el uso de ningún otro dispositivo electrónico (teléfonos, memorias, etc).</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">No se permite el uso de calculadoras.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Está permitido utilizar material impreso. Libros, copias, manuales etc.</span></p>
-      </li>
-      <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
-        <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Los alumnos no deben comunicarse con alumnos de otros equipos ni con el coach.</span></p>
-      </li>
-    </ul><br>
-  </div>
+  <section id="h.1969f226f34fce2d_185" class="yaqOZd">
+    <div class="IFuOkc"></div>
+    <div class="mYVXT">
+      <div class="LS81yb VICjCf j5pSsc db35Fc" tabindex="-1">
+        <div class="hJDwNd-AhqUyc-uQSCkd Ft7HRd-AhqUyc-uQSCkd purZT-AhqUyc-II5mzb ZcASvf-AhqUyc-II5mzb pSzOP-AhqUyc-qWD73c Ktthjf-AhqUyc-qWD73c JNdkSc SQVYQc">
+          <div class="JNdkSc-SmKAyb LkDMRd">
+            <div class="" jscontroller="sGwD4d" jsaction="zXBUYb:zTPCnb;zQF9Uc:Qxe3nd;" jsname="F57UId">
+              <div class="oKdM2c ZZyype Kzv0Me">
+                <div id="h.1969f226f34fce2d_182" class="hJDwNd-AhqUyc-uQSCkd Ft7HRd-AhqUyc-uQSCkd jXK9ad D2fZ2 zu5uec OjCsFc dmUFtb wHaque g5GTcb">
+                  <div class="jXK9ad-SmKAyb">
+                    <div class="tyJCtd mGzaTb Depvyb baZpAe">
+                      <p dir="ltr" class="zfr3Q CDt4Ke " style="text-align: center;"><span class="puwcIf C9DxTc " style="font-family: Bitter, Arial; font-weight: 700; vertical-align: baseline;">REGLAMENTO</span></p>
+                      <ul class="n8H08c UVNKR " style="list-style-type: square; margin-left: 0; margin-right: 0; padding: 0;">
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Podrán participar estudiantes inscritos formalmente en alguna institución de nivel superior del Estado de Guanajuato.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Cada equipo deberá estar formado por 3 integrantes de una misma institución. Solo se permiten equipos con 3 integrantes.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Cada equipo deberá tener un coach quien será el responsable de registrar. El coach deberá ser un docente o directivo de su institución.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Está prohibido el uso de cualquier herramienta de Inteligencia Artificial (chatGTP u otro).</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">No se permite navegar en ningún sitio, excepto en la plataforma del concurso.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Solo se permite el uso de la computadora asignada al equipo. No se permite el uso de ningún otro dispositivo electrónico (teléfonos, memorias, etc).</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">No se permite el uso de calculadoras.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Está permitido utilizar material impreso. Libros, copias, manuales etc.</span></p>
+                        </li>
+                        <li dir="ltr" class="zfr3Q TYR86d eD0Rn " style="margin-left: 15.0pt;">
+                          <p dir="ltr" role="presentation" class="zfr3Q CDt4Ke " style="background-color: transparent; border-bottom: none; border-left: none; border-right: none; border-top: none; line-height: 1.38; margin-bottom: 0.0pt; margin-left: 0.0pt; margin-top: 0.0pt; padding-bottom: 0.0pt; padding-left: 0.0pt; padding-right: 0.0pt; padding-top: 0.0pt; text-indent: 0.0pt;"><span class="gBYvFf C9DxTc " style="font-family: Arial; font-weight: 700; vertical-align: baseline;">Los alumnos no deben comunicarse con alumnos de otros equipos ni con el coach.</span></p>
+                        </li>
+                      </ul><br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <footer>
     <div class="social-media">
       <a href="https://web.facebook.com/CodingCupITSUR" target="_blank">

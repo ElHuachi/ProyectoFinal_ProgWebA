@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
-  <link rel="stylesheet" href="../Principal/estilos/estilos.css">
   <link rel="icon" href="https://lh5.googleusercontent.com/TZGZLyLItpVbRjj8C-y7iwKn9F7-nJSgyS3vjtNJBM3LG2Dqr9xKYafZc-alHwjoUkx_98mEEoLddVv3Oq73Bb6udZgeJ-u5dW34RFYe157wU4J_">
   <style>
     .btn-verde {
@@ -45,8 +44,7 @@
                   "<td>" . $value->UsuarioAd . "</td>",
                   "<td>" . $value->Tipo . "</td>",
                   "<td>",
-                  "<a class='btn btn-primary' href='../Login/RegistroUsuario.php?id=" . $value->idA . "'>Editar</a>",
-                  "<button class='btn btn-danger' onclick='confirmar(" . $value->idA . ",\"" . $value->UsuarioAd . "\")'>Eliminar</button>",
+                  "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $value->idA . ",\"" . $value->UsuarioAd . "\")'>Eliminar</button>",
                   "</td>",
                   "</tr>";
           }
@@ -103,6 +101,6 @@
     <script src="dt/Buttons-2.4.2/js/buttons.html5.min.js"></script>
     <script src="dt/Buttons-2.4.2/js/buttons.print.min.js"></script>
     <script src="dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
-  <script src="../Vista/Js/ListaAdmins.js"></script>
+    <script src="../Vista/Js/ListaAdmins.js"></script>
 </body>
 </html>

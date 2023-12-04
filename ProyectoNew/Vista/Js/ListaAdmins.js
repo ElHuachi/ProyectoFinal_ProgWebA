@@ -38,16 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
         order: [[1, 'asc'], [2, 'desc']]
     });
 
-    AdminConfirmacion = document.getElementById('mdlConfirmacion'); // Fix the ID here
-    AdminConfirmacion.addEventListener('show.bs.modal', event => {
-        let clave = event.relatedTarget.value;
-        document.getElementById("spnPersona").innerText =
-            event.relatedTarget.closest('tr').children[1].innerText;
-        document.getElementById("btnConfirmar").value = clave;
+    AdminConfirmacion = new bootstrap.Modal(document.getElementById('mdlConfirmacion'));
+
+    // Agregamos un listener al botón eliminar para pasar el valor adecuado
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            confirmar(this.getAttribute('data-id'), this.getAttribute('data-usuario'));
+        });
     });
 });
 
-function confirmar(btn) {
-    const mdlEliminar = new bootstrap.Modal('#mdlConfirmacion'); // Fix the typo here
-    mdlEliminar.show(btn);
+function confirmar(id, usuario) {
+    document.getElementById("spnPersona").innerText = usuario;
+    document.getElementById("btnConfirmar").value = id;
+    AdminConfirmacion.show();
 }

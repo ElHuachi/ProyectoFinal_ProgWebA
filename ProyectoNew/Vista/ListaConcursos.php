@@ -20,32 +20,43 @@
 <body>
   <?php
   require('../Principal/menu.php');
- // require_once('');
-  //$dao = new DAOUsuario();
-  //$listaUsuarios = $dao->obtenerTodos();
+  require('../datos/conexion.php');
+  require('../datos/daoConcursos.php');
+  $daoConcursos = new DAOConcursos();
+  $concursos = $daoConcursos -> obtenerTodos();
   ?>
   <div class="container">
     <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>
-            <th>Concursos Activos</th>
-            <th>Concursos Pasados</th>
-            <th>Concursos Futuros</th>
-            <th>Fechas</th>
+            <th>Concurso</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lugar</th>
+            <th>Institucion</th>
+            <th>Operaciones</th>
         </tr>
       </thead>
       <tbody>
         <?php
-      /*  foreach ($listaUsuarios as $usuario) {
-          echo "<tr><td>" . trim($usuario->apellido1 . " " . $usuario->apellido2) . " " . $usuario->nombre . "</td>" .
-            "<td>" . $usuario->email . "</td>" .
-            "<td>" . ($usuario->genero == "M" ? "Masculino" : "Femenino") . "</td>" .
-            "<td>" .
-            "<button type='button' class='btn btn-primary btn-editar' data-id='" . $usuario->id . "'>Editar</button>" .
-            "<button type='button' class='btn btn-danger btn-eliminar' onclick='confirmar(this)' data-id='" . $usuario->id . "'>Eliminar</button>" .
-            "</td></tr>";
-        }*/
+        if($concursos){
+        foreach ($concursos as $concurso) {
+          echo "<tr>",
+          "<td>" . $concurso->NombreC . "</td>",
+          "<td>" . $concurso->FechaC . "</td>",
+          "<td>" . $concurso->HoraC . "</td>",
+          "<td>" . $concurso->LugarC . "</td>",
+          "<td>" . $concurso->Institucion . "</td>",
+          "<td>",
+          "<a class='btn btn-primary' href='../Login/RegistroUsuario.php?id=" . $concurso->NombreC . "'>Editar</a>",
+          "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $concurso->NombreC . "\")'>Eliminar</button>",
+                  "</td>",
+                  "</tr>";
+      }
+    }else{
+      echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+    }
         ?>
       </tbody>
     </table>

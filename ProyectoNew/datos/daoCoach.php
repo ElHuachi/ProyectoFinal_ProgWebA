@@ -46,7 +46,7 @@ class DAOCoach
                 $obj->IdC = $row->id;
                 $obj->NombreC = $row->NombreC;
                 $obj->CorreoC = $row->CorreoC;
-                $obj->Institucion = $row->NombreI;
+                $obj->Institucion = $row->Institucion;
                 $obj->idTipo = $row->idTipo;
                 $obj->PassCo = $row->PassCo;
 
@@ -85,7 +85,7 @@ class DAOCoach
                 $obj->Estudiante2 = $resultado->Estudiante2;
                 $obj->Estudiante3 = $resultado->Estudiante3;
                 $obj->Coach = $resultado->Coach;
-                $obj->NombreI = $resultado->NombreI;
+                $obj->Institucion = $resultado->Institucion;
             }
             return $obj;
         } catch (Exception $e) {
@@ -204,7 +204,7 @@ class DAOCoach
                     $obj->Estudiante2,
                     $obj->Estudiante3,
                     $obj->Coach,
-                    $obj->NombreI,
+                    $obj->Institucion,
                     $obj->IdE
                 )
             );
@@ -249,7 +249,7 @@ class DAOCoach
                     ':estudiante2' => $obj->Estudiante2,
                     ':estudiante3' => $obj->Estudiante3,
                     ':coach' => $obj->Coach,
-                    ':nombreI' => $obj->NombreI
+                    ':nombreI' => $obj->Institucion
                 ));
 
             $clave = $this->conexion->lastInsertId();
