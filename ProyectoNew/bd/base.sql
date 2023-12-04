@@ -75,7 +75,7 @@ create table Auxiliares (
 insert into Tipo values ('Ax', 'Auxiliar');
 insert into Tipo values ('Co', 'Coach');
 insert into Tipo values ('Ad', 'Administrador');
-insert into Administradores values (default, 'Admin','Ad',sha2('123456',256));
+insert into Administradores values (default, 'Ad', 'Admin',sha2('123456',256));
 select * from Tipo;
 SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd, Administradores.PassAd
 FROM Administradores
@@ -107,3 +107,8 @@ SELECT * FROM Concursos;
 SELECT * FROM Coach;
 SELECT * FROM Equipos;
 SELECT * FROM Auxiliares;
+SELECT * FROM Administradores;
+
+SELECT Auxiliares.idAx, Tipo.Nombre AS Tipo, Auxiliares.UsuarioAx
+                                                    FROM Auxiliares
+                                                    JOIN Tipo ON Auxiliares.idTipo = Tipo.id;
