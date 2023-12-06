@@ -1,9 +1,9 @@
 <?php
 //importa la clase conexión y el modelo para usarlos
-require_once 'conexion.php';
-require_once '../modelos/coach.php';
-require_once '../modelos/equipos.php';
-require_once '../modelos/instituciones.php';
+require_once('conexion.php');
+require_once __DIR__ . '/../modelos/coach.php';
+require_once __DIR__ . '/../modelos/equipos.php';
+require_once __DIR__ . '/../modelos/instituciones.php';
 
 class DAOCoach
 {
@@ -14,8 +14,7 @@ class DAOCoach
     private function conectar()
     {
         //creamos una instancia de la clase conexión
-        if(session_status()){
-
+        if (session_status()) {
         }
 
         try {
@@ -48,7 +47,7 @@ class DAOCoach
             foreach ($resultado as $row) {
                 $obj = new Coach();
 
-                $obj->IdC = $row->id;
+                $obj->IdC = $row->IdC;
                 $obj->NombreC = $row->NombreC;
                 $obj->CorreoC = $row->CorreoC;
                 $obj->Institucion = $row->Institucion;
@@ -131,29 +130,25 @@ class DAOCoach
             Conexion::desconectar();
         }
     }
-    public function autenticar($CorreoC, $PassCo)
+    public function autenticarCoach($correo, $contrasena)
     {
         try {
             $this->conectar();
-
-            //Almacenará el registro obtenido de la BD
+    
             $obj = null;
-
-            $sentenciaSQL = $this->conexion->prepare("SELECT IdE,NombreEquipo FROM Equipos WHERE Coach=? AND password=sha2(?,224)");
-            //Se ejecuta la sentencia sql con los parametros dentro del arreglo 
-            $sentenciaSQL->execute(array($CorreoC, $PassCo));
-
-            /*Obtiene los datos*/
-            $fila = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
-            if ($fila) {
-                $obj = new Equipos();
-
-                $obj->IdE = $fila->IdE;
-                $obj->NombreEquipo = $fila->NombreEquipo;
-            } else {
-                $obj = null;
+    
+            $sentenciaSQL = $this->conexion->prepare("SELECT IdC, NombreC FROM Coach WHERE CorreoC=? AND PassCo=SHA2(?, 224)");
+            $sentenciaSQL->execute(array($correo, $contrasena));
+    
+            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
+    
+            if ($resultado) {
+                $obj = new Coach();
+                $obj->IdC = $resultado->IdC;
+                $obj->NombreC = $resultado->NombreC;
             }
-            return null;
+    
+            return $obj;
         } catch (Exception $e) {
             return null;
         } finally {
@@ -164,24 +159,20 @@ class DAOCoach
     /**
      * Elimina el usuario con el id indicado como parámetro
      */
-    public function eliminar($IdE)
+    public function eliminar($IdC)
     {
         try {
             $this->conectar();
-
-            $sentenciaSQL = $this->conexion->prepare("DELETE FROM Equipos WHERE IdE = ?");
-            $resultado = $sentenciaSQL->execute(array($IdE));
-            return $resultado;
+            $sql = "DELETE FROM Coach WHERE IdC = ?";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([$IdC]);
+            return true;
         } catch (PDOException $e) {
-            //Si quieres acceder expecíficamente al numero de error
-            //se puede consultar la propiedad errorInfo
-            return false;
+            throw new Exception("Error al eliminar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
     }
-
-
 
     /**
      * Función para editar a los equipos de acuerdo al objeto recibido como parámetro
@@ -227,47 +218,35 @@ class DAOCoach
     /**
      * Agrega un nuevo usuario de acuerdo al objeto recibido como parámetro
      */
-    public function agregar(Equipos $obj)
-    {
-        $clave = 0;
-        try {
-            $sql = "INSERT INTO Equipos
-                (NombreEquipo,
-                Estudiante1,
-                Estudiante2,
-                Estudiante3,
-                Coach,
-                NombreI)
-                VALUES
-                (:NombreEquipo,
-                :Estudiante1,
-                :Estudiante2,
-                :Estudiante3,
-                :Coach,
-                :NombreI);";
+    public function insertarCoach($coach)
+{
+    try {
+        $this->conectar();
 
-            $this->conectar();
-            $this->conexion->prepare($sql)
-                ->execute(array(
-                    ':nombreEquipo' => $obj->NombreEquipo,
-                    ':estudiante1' => $obj->Estudiante1,
-                    ':estudiante2' => $obj->Estudiante2,
-                    ':estudiante3' => $obj->Estudiante3,
-                    ':coach' => $obj->Coach,
-                    ':nombreI' => $obj->Institucion
-                ));
+        // Preparar la consulta SQL
+        $query = "INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES (?, ?, ?, ?, sha2(?,224))";
+        $statement = $this->conexion->prepare($query);
 
-            $clave = $this->conexion->lastInsertId();
-            return $clave;
-        } catch (Exception $e) {
-            return $clave;
-        } finally {
+        // Vincular los parámetros
+        $statement->bindParam(1, $coach->NombreC);
+        $statement->bindParam(2, $coach->CorreoC);
+        $statement->bindParam(3, $coach->Institucion);
+        $statement->bindParam(4, $coach->idTipo);
+        $statement->bindParam(5, $coach->PassCo);
 
-            /*En caso de que se necesite manejar transacciones, 
-			no deberá desconectarse mientras la transacción deba 
-			persistir*/
+        // Ejecutar la consulta
+        $resultado = $statement->execute();
 
-            Conexion::desconectar();
-        }
+        // Cerrar la declaración
+        $statement->closeCursor(); // Usar closeCursor en lugar de close
+
+        return $resultado;
+    } catch (PDOException $e) {
+        // Manejar la excepción según tus necesidades
+        // Aquí puedes registrar el error, lanzar una excepción personalizada, etc.
+        return false;
+    } finally {
+        Conexion::desconectar();
     }
+}
 }

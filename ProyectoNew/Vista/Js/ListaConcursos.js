@@ -2,6 +2,7 @@ let ConcursosConfirmacion;
 
 document.addEventListener('DOMContentLoaded', () => {
     $("#lista").DataTable({
+        // Configuración de DataTables
         dom: 'Bfrtip',
         buttons: [
             'pageLength',
@@ -38,44 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
         order: [[1, 'asc'], [2, 'desc']]
     });
 
-    ConcursosConfirmacion = new bootstrap.Modal(document.getElementById('mdlConfirmacion'), {
-        backdrop: 'static'
-    });
+    ConcursosConfirmacion = new bootstrap.Modal(document.getElementById('mdlConfirmacion'));
 
-    $('#lista').on('click', '.btn-editar', function () {
-        var userId = $(this).data('id');
-        window.location.href = 'usuario.php?id=' + userId;
-    });
-
-    $('#lista').on('click', '.btn-eliminar', function () {
-        var userId = $(this).attr('data-id'); // Cambiado de 'value' a 'data-id'
-        // Mostrar el modal de confirmación
-        confirmarEliminar(userId);
-    });
-
-    function confirmarEliminar(userId) {
-        // Mostrar el modal de confirmación
-        ConcursosConfirmacion.show();
-
-        // Configurar el evento de confirmación
-        $('#btnConfirmar').on('click', function () {
-            // Ocultar el modal de confirmación
-            ConcursosConfirmacion.hide();
-
-            // Enviar solicitud AJAX para eliminar el usuario
-            $.ajax({
-                type: 'POST',
-                url: 'usuarioUtil.php',
-                data: { eliminar: userId },
-                success: function (response) {
-                    console.log(response);
-                    // Recargar la página después de la eliminación exitosa
-                    location.reload();
-                },
-                error: function (error) {
-                    console.error('Error en la solicitud AJAX: ', error);
-                }
-            });
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            let idConcurso = this.getAttribute('data-idc');
+            let nombreConcurso = this.getAttribute('data-nombre');
+            document.getElementById("spnPersona").innerText = nombreConcurso;
+            document.getElementById("btn-Confirmar").setAttribute('data-idc', idConcurso);
+            ConcursosConfirmacion.show();
         });
-    }
+    });
+
+    document.getElementById('btn-Confirmar').addEventListener('click', function () {
+        let idConcursoEliminar = this.getAttribute('data-idc');
+
+        // Redirigir a la página de procesamiento de eliminación con el ID del concurso
+        window.location.href = `Procesos/procesar_eliminar_concursos.php?id=${idConcursoEliminar}`;
+    });
+
+    document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            let idConcursoEditar = this.getAttribute('data-idc');
+            window.location.href = `editarConcurso.php?IdC=${idConcursoEditar}`;
+        });
+    });
 });

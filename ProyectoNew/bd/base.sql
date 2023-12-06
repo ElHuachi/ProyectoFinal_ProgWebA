@@ -26,12 +26,11 @@ create table
     Concursos (
         IdC int auto_increment,
         NombreC varchar(50) not null,
+        FechaI date not null,
         FechaC date not null,
         HoraC time not null,
         LugarC varchar(50) not null,
-        Institucion varchar(50) not null,
-        primary key (IdC),
-        foreign key (Institucion) references Instituciones (NombreI)
+        primary key (IdC)
     );
 
 -- drop table equipos;
@@ -86,15 +85,15 @@ INSERT INTO Instituciones VALUES ('Institucion1');
 INSERT INTO Instituciones VALUES ('Institucion2');
 
 -- Insertar datos en la tabla Concursos
-INSERT INTO Concursos (NombreC, FechaC, HoraC, LugarC, Institucion) VALUES ('Concurso1', '2023-01-01', '12:00:00', 'Lugar1', 'Institucion1');
-INSERT INTO Concursos (NombreC, FechaC, HoraC, LugarC, Institucion) VALUES ('Concurso2', '2023-02-01', '14:00:00', 'Lugar2', 'Institucion2');
+INSERT INTO Concursos (NombreC, FechaI, FechaC, HoraC, LugarC) VALUES ('Concurso1', '2022-12-12', '2023-01-01', '12:00:00', 'Lugar1');
+INSERT INTO Concursos (NombreC, FechaI, FechaC, HoraC, LugarC) VALUES ('Concurso2', '2022-12-12', '2023-02-01', '14:00:00', 'Lugar2');
 
 -- Insertar datos en la tabla Coach
 INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach1', 'coach1@example.com', 'Institucion1', 'Co', sha2('password', 256));
 INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach2', 'coach2@example.com', 'Institucion2', 'Co', sha2('password', 256));
 
 -- Insertar datos en la tabla Equipos
-INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1', '', 1);
+INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1', '', 0);
 INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo2', 'Estudiante4', 'Estudiante5', 'Estudiante6', 'Institucion2', 'Coach2', '', 0);
 
 -- Insertar datos en la tabla Auxiliares
@@ -107,8 +106,9 @@ SELECT * FROM Concursos;
 SELECT * FROM Coach;
 SELECT * FROM Equipos;
 SELECT * FROM Auxiliares;
+select * FROM TIPO;
 SELECT * FROM Administradores;
-
+SELECT PassAd FROM Administradores;
 SELECT Auxiliares.idAx, Tipo.Nombre AS Tipo, Auxiliares.UsuarioAx
-                                                    FROM Auxiliares
-                                                    JOIN Tipo ON Auxiliares.idTipo = Tipo.id;
+FROM Auxiliares
+JOIN Tipo ON Auxiliares.idTipo = Tipo.id;

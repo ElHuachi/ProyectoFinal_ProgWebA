@@ -58,8 +58,8 @@
             fill: white;
         }
     </style>
-    <link rel="stylesheet" href="../Principal/estilos/estilos.css">
-    <link rel="icon" href="https://lh5.googleusercontent.com/TZGZLyLItpVbRjj8C-y7iwKn9F7-nJSgyS3vjtNJBM3LG2Dqr9xKYafZc-alHwjoUkx_98mEEoLddVv3Oq73Bb6udZgeJ-u5dW34RFYe157wU4J_">
+    <link rel="stylesheet" href="../estilos/estilos.css">
+    <link rel="icon" href="../IMGS/CCUP.png">
 </head>
 
 <body>
@@ -83,13 +83,12 @@
             <span class="MuiTouchRipple-root"></span>
         </button>
         <div class="dropdown-container" id="myDropdown">
-            <a href="../Vista/ListaAdmin.php">Lista Administradores</a>
+            <!-- <a href="../Vista/ListaAdmin.php">Lista Administradores</a> -->
             <a href="../Vista/ListaEquipos.php">Lista Equipos</a>
             <a href="../Vista/ListaCoach.php">Lista Coach</a>
-            <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a>
-            <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a>
+            <!-- <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a> -->
+            <!-- <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a> -->
             <a href="../Vista/ListaConcursos.php">Lista Concursos</a>
-            <a href="../Vista/AddAdmin.php">Sistema para agregar Admin/Aux</a>
         </div>
     </header>
 

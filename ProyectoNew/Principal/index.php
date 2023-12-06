@@ -17,13 +17,13 @@
     <h1 class="animate-title">CODING CUP 2023</h1>
     <div class="image-container">
       <a href="https://www.codingcup.org/" target="_blank">
-        <img src="IMGS/coding.png" alt="CodingCup" id="coding" class="content-image left" />
+        <img src="../IMGS/coding.png" alt="CodingCup" id="coding" class="content-image left" />
       </a>
       <a href="https://surguanajuato.tecnm.mx/" target="_blank">
-        <img src="IMGS/client-logo-7.png" alt="ITSUR" id="tecnm" class="content-image right" />
+        <img src="../IMGS/client-logo-7.png" alt="ITSUR" id="tecnm" class="content-image right" />
       </a>
       <a href="https://www.tecnm.mx/" target="_blank">
-        <img src="IMGS/Logo-TecNM.png" alt="halcon" id="halcon" class="content-image center" />
+        <img src="../IMGS/Logo-TecNM.png" alt="halcon" id="halcon" class="content-image center" />
       </a>
     </div>
     <p class="highlighted-text animate-highlight">
@@ -33,7 +33,7 @@
   </div>
 
   <div>
-    <img src="IMGS/ALCON2.jpg" alt="ALCON2" class="content-image center" />
+    <img src="../IMGS/ALCON2.jpg" alt="ALCON2" class="content-image center" />
   </div>
   <section id="h.1969f226f34fce2d_185" class="yaqOZd">
     <div class="IFuOkc"></div>

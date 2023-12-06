@@ -1,8 +1,8 @@
 <?php
 //importa la clase conexión y el modelo para usarlos
-require_once 'conexion.php';
-require_once '../modelos/equipos.php';
-require_once '../modelos/instituciones.php';
+require_once ('conexion.php');
+require_once __DIR__ . '/../modelos/equipos.php';
+require_once __DIR__ . '/../modelos/instituciones.php';
 
 class DAOEquipos
 {
@@ -35,7 +35,6 @@ class DAOEquipos
             /* Se recorre el cursor para obtener los datos */
             foreach ($resultado as $row) {
                 $obj = new Equipos();
-
                 $obj->IdE = $row->IdE;
                 $obj->NombreEquipo = $row->NombreEquipo;
                 $obj->Estudiante1 = $row->Estudiante1;
@@ -45,10 +44,8 @@ class DAOEquipos
                 $obj->Institucion = $row->Institucion;
                 $obj->FotoEquipo = $row->FotoEquipo;
                 $obj->Aprobado = $row->Aprobado;
-
                 $lista[] = $obj;
             }
-
             return $lista;
         } catch (PDOException $e) {
             return null;
@@ -86,28 +83,31 @@ class DAOEquipos
         try {
             $this->conectar();
             $sql = "DELETE FROM Equipos WHERE IdE = ?";
-            $sentenciaSQL = $this->conexion->prepare($sql);
-            $sentenciaSQL->execute(array($id));
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            throw new Exception("Error al eliminar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
     }
+    
 
-    public function actualizar($id)
-    {
+    public function autorizar($idE){
         try {
             $this->conectar();
             $sql = "UPDATE Equipos SET Aprobado = 1 WHERE IdE = ?";
             $sentenciaSQL = $this->conexion->prepare($sql);
-            $sentenciaSQL->execute(array($id));
+            $sentenciaSQL->execute([$idE]);
+            error_log("Equipo autorizado correctamente. ID: $idE");
+            return true;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            throw new Exception("Error al autorizar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
-    }
+    }    
 
     public function obtenerUno($id)
     {

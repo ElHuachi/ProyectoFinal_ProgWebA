@@ -27,7 +27,7 @@
         </form>
     </div>
 </body>
-<script src="Login/JS/validacion.js"></script>
+<!-- <script src="../Login/JS/validacion.js"></script> -->
 </html>
 
 

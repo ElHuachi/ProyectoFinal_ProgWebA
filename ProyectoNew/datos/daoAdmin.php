@@ -12,24 +12,32 @@ class DaoAdmin
             throw new Exception("Error al conectar: " . $e->getMessage());
         }
     }
-    public function login($username, $password)
+    public function autenticarAdministrador($usuario, $contrasena)
     {
         try {
-            $this->conectar();
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM admin WHERE UsuarioAd=? AND PassAd=?");
-            $sentenciaSQL->execute([$username, $password]);
-            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
+            $query = "SELECT id, UsuarioAd FROM Administrador WHERE UsuarioAd = ? AND PassAd = SHA2(?, 224)";
+            $statement = $this->conexion->prepare($query);
+            $statement->bindParam(1, $usuario);
+            $statement->bindParam(2, $contrasena);
+            $statement->execute();
+
+            $resultado = $statement->fetch(PDO::FETCH_OBJ);
+
             if ($resultado) {
-                return $resultado;
-            } else {
-                return null;
+                $admin = new admin();
+                $admin->id = $resultado->id;
+                $admin->UsuarioAd = $resultado->UsuarioAd;
+                return $admin;
             }
+
+            return null;
         } catch (PDOException $e) {
             return null;
         } finally {
             Conexion::desconectar();
         }
     }
+
 
     public function logout()
     {
@@ -41,7 +49,8 @@ class DaoAdmin
      * Metodo que permite insertar un nuevo registro en la tabla
      * de usuarios
      */
-    public function insertar($obj) {
+    public function insertar($obj)
+    {
         try {
             $sql = "INSERT INTO Administradores (idTipo, UsuarioAd, PassAd) VALUES (?, ?, sha2(?,256))";
             $this->conectar();
@@ -78,22 +87,29 @@ class DaoAdmin
             Conexion::desconectar();
         }
     }
-    public function eliminar($id)
+    public function eliminar($idA)
     {
         try {
-            $sql = "DELETE FROM Administradores WHERE id=?";
+            $sql = "DELETE FROM Administradores WHERE idA=?";
 
             $this->conectar();
-            $this->conexion->prepare($sql)->execute(array($id));
-            return true;
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([$idA]);
+
+            // Verificar si se eliminó alguna fila
+            $rowCount = $stmt->rowCount();
+
+            return $rowCount > 0;
         } catch (PDOException $e) {
-            return false;
+            throw new Exception("Error al eliminar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
     }
 
-    public function obtenerTipoPermisos(){
+
+    public function obtenerTipoPermisos()
+    {
         try {
             $this->conectar();
 
@@ -161,35 +177,36 @@ class DaoAdmin
         }
     }
 
-    public function obtenerTodosPermisos(){
+    public function obtenerTodosPermisos()
+    {
         try {
             $this->conectar();
-    
+
             $lista = array();
-    
+
             // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
             $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
                                                     FROM Administradores
                                                     JOIN Tipo ON Administradores.idTipo = Tipo.id");
-    
+
             // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
             $sentenciaSQL->execute();
-    
+
             $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-    
+
             // Se recorre el cursor para obtener los datos
             foreach ($resultado as $row) {
                 // Se crea un objeto tipo stdClass para almacenar los datos
                 $obj = new stdClass();
-    
+
                 // Se asignan los valores del resultado al objeto
                 $obj->idA = $row->idA;
                 $obj->Tipo = $row->Tipo;
                 $obj->UsuarioAd = $row->UsuarioAd;
-    
+
                 $lista[] = $obj;
             }
-    
+
             return $lista;
         } catch (PDOException $e) {
             // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
@@ -200,35 +217,36 @@ class DaoAdmin
             Conexion::desconectar();
         }
     }
-    
-    public function obtenerUno(){
+
+    public function obtenerUno()
+    {
         try {
             $this->conectar();
-    
+
             $obj = null;
-    
+
             // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
             $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
                                                     FROM Administradores
                                                     JOIN Tipo ON Administradores.idTipo = Tipo.id
                                                     WHERE Administradores.idA = ?");
-    
+
             // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
             $sentenciaSQL->execute(array($_SESSION["idA"]));
-    
+
             $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
-    
+
             // Se recorre el cursor para obtener los datos
             if ($resultado) {
                 // Se crea un objeto tipo stdClass para almacenar los datos
                 $obj = new stdClass();
-    
+
                 // Se asignan los valores del resultado al objeto
                 $obj->idA = $resultado->idA;
                 $obj->Tipo = $resultado->Tipo;
                 $obj->UsuarioAd = $resultado->UsuarioAd;
             }
-    
+
             return $obj;
         } catch (PDOException $e) {
             // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
@@ -240,34 +258,35 @@ class DaoAdmin
         }
     }
 
-    public function autenticar(){
+    public function autenticar()
+    {
         try {
             $this->conectar();
-    
+
             $obj = null;
-    
+
             // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
             $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
                                                     FROM Administradores
                                                     JOIN Tipo ON Administradores.idTipo = Tipo.id
                                                     WHERE Administradores.idA = ?");
-    
+
             // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
             $sentenciaSQL->execute(array($_SESSION["idA"]));
-    
+
             $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
-    
+
             // Se recorre el cursor para obtener los datos
             if ($resultado) {
                 // Se crea un objeto tipo stdClass para almacenar los datos
                 $obj = new stdClass();
-    
+
                 // Se asignan los valores del resultado al objeto
                 $obj->idA = $resultado->idA;
                 $obj->Tipo = $resultado->Tipo;
                 $obj->UsuarioAd = $resultado->UsuarioAd;
             }
-    
+
             return $obj;
         } catch (PDOException $e) {
             // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades

@@ -40,17 +40,17 @@
         <?php
         if ($data) {
           foreach ($data as $value) {
-              echo "<tr><td>" . $value->idAx . "</td>",
-                  "<td>" . $value->UsuarioAx . "</td>",
-                  "<td>" . $value->Tipo . "</td>",
-                  "<td>",
-                  "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $value->IdAx . ",\"" . $value->UsuarioAx . "\")'>Eliminar</button>",
-                  "</td>",
-                  "</tr>";
+            echo "<tr><td>" . $value->idAx . "</td>",
+            "<td>" . $value->UsuarioAx . "</td>",
+            "<td>" . $value->Tipo . "</td>",
+            "<td>",
+            "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $value->IdAx . ",\"" . $value->UsuarioAx . "\")'>Eliminar</button>",
+            "</td>",
+            "</tr>";
           }
-      } else {
+        } else {
           echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
-      }
+        }
         ?>
       </tbody>
     </table>
@@ -89,17 +89,18 @@
       </div>
     </div>
   </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
-    <script src="dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="dt/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="dt/Buttons-2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="dt/Buttons-2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="dt/JSZip-3.10.1/jszip.min.js"></script>
-    <script src="dt/pdfmake-0.2.7/pdfmake.min.js"></script>
-    <script src="dt/pdfmake-0.2.7/vfs_fonts.js"></script>
-    <script src="dt/Buttons-2.4.2/js/buttons.html5.min.js"></script>
-    <script src="dt/Buttons-2.4.2/js/buttons.print.min.js"></script>
-    <script src="dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
+  <script src="../Vista/Js/bootstrap.bundle.min.js"></script>
+  <script src="../dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
+  <script src="../dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="../dt/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  <script src="../dt/Buttons-2.4.2/js/dataTables.buttons.min.js"></script>
+  <script src="../dt/Buttons-2.4.2/js/buttons.bootstrap5.min.js"></script>
+  <script src="../dt/JSZip-3.10.1/jszip.min.js"></script>
+  <script src="../dt/pdfmake-0.2.7/pdfmake.min.js"></script>
+  <script src="../dt/pdfmake-0.2.7/vfs_fonts.js"></script>
+  <script src="../dt/Buttons-2.4.2/js/buttons.html5.min.js"></script>
+  <script src="../dt/Buttons-2.4.2/js/buttons.print.min.js"></script>
+  <script src="../dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
 </body>
+
 </html>

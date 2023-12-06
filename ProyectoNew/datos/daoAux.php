@@ -104,23 +104,26 @@ class DaoAux
         }
     }
 
-    public function autenticar(){
+    public function autenticarAuxiliar($usuario, $contrasena)
+    {
         try {
-            $this->conectar();
-            $obj = null;
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM auxiliares WHERE UsuarioAx = ? AND PassAx = ?");
-            $sentenciaSQL->execute();
-            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            foreach ($resultado as $row) {
+            $query = "SELECT IdAx, NombreAx, UsuarioAx FROM Auxiliar WHERE UsuarioAx = ? AND PassAx = SHA2(?, 224)";
+            $statement = $this->conexion->prepare($query);
+            $statement->bindParam(1, $usuario);
+            $statement->bindParam(2, $contrasena);
+            $statement->execute();
+
+            $resultado = $statement->fetch(PDO::FETCH_OBJ);
+
+            if ($resultado) {
                 $auxiliar = new auxiliar();
-                $auxiliar->IdAx = $row->IdAx;
-                $auxiliar->NombreAx = $row->NombreAx;
-                $auxiliar->UsuarioAx = $row->UsuarioAx;
-                $auxiliar->PassAx = $row->PassAx;
-                $auxiliar->idTipo = $row->idTipo;
-                $obj = $auxiliar;
+                $auxiliar->IdAx = $resultado->IdAx;
+                $auxiliar->NombreAx = $resultado->NombreAx;
+                $auxiliar->UsuarioAx = $resultado->UsuarioAx;
+                return $auxiliar;
             }
-            return $obj;
+
+            return null;
         } catch (PDOException $e) {
             return null;
         } finally {

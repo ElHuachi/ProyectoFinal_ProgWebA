@@ -1,4 +1,5 @@
 let AdminConfirmacion;
+let idUsuarioEliminar;
 
 document.addEventListener('DOMContentLoaded', () => {
     $("#lista").DataTable({
@@ -46,10 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmar(this.getAttribute('data-id'), this.getAttribute('data-usuario'));
         });
     });
+
+    document.getElementById('btnConfirmar').addEventListener('click', function () {
+        confirmarEliminar();
+    });
 });
 
 function confirmar(id, usuario) {
     document.getElementById("spnPersona").innerText = usuario;
-    document.getElementById("btnConfirmar").value = id;
+    idUsuarioEliminar = id;
     AdminConfirmacion.show();
+}
+
+function confirmarEliminar() {
+    eliminarUsuario(idUsuarioEliminar);
+}
+
+function eliminarUsuario(id) {
+    // Se cambia la URL de redirección
+    window.location.href = `../Vista/Procesos/procesar_eliminar.php?idA=${id}`;
 }
