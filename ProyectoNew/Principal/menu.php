@@ -59,7 +59,7 @@
         }
     </style>
     <link rel="stylesheet" href="../estilos/estilos.css">
-    <link rel="icon" href="../IMGS/CCUP.png">
+    <link rel="icon" href="/favicon.ico">
 </head>
 
 <body>
@@ -71,6 +71,7 @@
                     <li><a href="../Login/Login.php">Inicio de Sesión</a></li>
                     <li><a href="../Login/Registro.php">Registro</a></li>
                     <li><a href="../Login/Equipos.php">Registra tu equipo</a></li>
+                    <li><a href="../proceso_cerrar_sesion.php">Cerrar Sesion</a></li>
                 </ul>
             </div>
         </nav>
@@ -83,11 +84,11 @@
             <span class="MuiTouchRipple-root"></span>
         </button>
         <div class="dropdown-container" id="myDropdown">
-            <!-- <a href="../Vista/ListaAdmin.php">Lista Administradores</a> -->
+            <a href="../Vista/ListaAdmin.php">Lista Administradores</a>
             <a href="../Vista/ListaEquipos.php">Lista Equipos</a>
             <a href="../Vista/ListaCoach.php">Lista Coach</a>
-            <!-- <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a> -->
-            <!-- <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a> -->
+            <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a>
+            <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a>
             <a href="../Vista/ListaConcursos.php">Lista Concursos</a>
         </div>
     </header>

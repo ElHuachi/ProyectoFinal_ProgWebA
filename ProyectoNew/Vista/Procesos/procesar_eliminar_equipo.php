@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IdE"])) {
             $daoEquipos->autorizar($idE);
             $message = 'Equipo autorizado correctamente';
         } else {
-            $daoEquipos->eliminar($idE);
+            $daoEquipos->eliminar($idE);    
             $message = 'Equipo eliminado correctamente';
         }
     } catch (Exception $e) {
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IdE"])) {
     header("Location: $redirectURL");
     exit();
 } else {
-    // Redirige a una página de error si se accede directamente a procesar_eliminar_equipo.php sin el ID
+    // Redirige a una página de error si se accede directamente a procesos.php sin el ID
     header("Location: ../error.php");
     exit();
 }

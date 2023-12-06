@@ -1,38 +1,34 @@
 <?php
-//importa la clase conexión y el modelo para usarlos
-require_once ('conexion.php');
+
+require_once('conexion.php');
 require_once __DIR__ . '/../modelos/equipos.php';
 require_once __DIR__ . '/../modelos/instituciones.php';
 
 class DAOEquipos
 {
-    /**
-     * Permite obtener la conexión a la BD
-     */
     private $conexion;
+
     private function conectar()
     {
         try {
             $this->conexion = Conexion::conectar();
         } catch (Exception $e) {
-            die($e->getMessage()); /*Si la conexion no se establece se cortara el flujo enviando un mensaje con el error*/
+            die($e->getMessage());
         }
     }
-    public function obtenerTodos(){
+
+    public function obtenerTodos()
+    {
         try {
             $this->conectar();
 
             $lista = array();
-            /* Se arma la sentencia SQL para seleccionar todos los registros de la base de datos */
             $sentenciaSQL = $this->conexion->prepare("SELECT * FROM Equipos");
 
-            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
             $sentenciaSQL->execute();
 
             $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            /* Podemos obtener un cursor (resultado con todos los renglones como 
-            un arreglo de arreglos asociativos o un arreglo de objetos */
-            /* Se recorre el cursor para obtener los datos */
+
             foreach ($resultado as $row) {
                 $obj = new Equipos();
                 $obj->IdE = $row->IdE;
@@ -71,6 +67,9 @@ class DAOEquipos
                     $obj->Aprobado
                 )
             );
+            // Redirige a la página de ListaEquipos después de agregar
+            header("Location: /ProyectoNew/Vista/ListaEquipos.php");
+            exit();
         } catch (PDOException $e) {
             echo $e->getMessage();
         } finally {
@@ -85,29 +84,34 @@ class DAOEquipos
             $sql = "DELETE FROM Equipos WHERE IdE = ?";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([$id]);
-            return true;
+
+            // Redirige a la página de ListaEquipos después de eliminar
+            header("Location: /ProyectoNew/Vista/ListaEquipos.php");
+            exit();
         } catch (PDOException $e) {
             throw new Exception("Error al eliminar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
     }
-    
 
-    public function autorizar($idE){
+    public function autorizar($idE)
+    {
         try {
             $this->conectar();
             $sql = "UPDATE Equipos SET Aprobado = 1 WHERE IdE = ?";
             $sentenciaSQL = $this->conexion->prepare($sql);
             $sentenciaSQL->execute([$idE]);
-            error_log("Equipo autorizado correctamente. ID: $idE");
-            return true;
+
+            // Redirige a la página de ListaEquipos después de autorizar
+            header("Location: /ProyectoNew/Vista/ListaEquipos.php");
+            exit();
         } catch (PDOException $e) {
             throw new Exception("Error al autorizar: " . $e->getMessage());
         } finally {
             Conexion::desconectar();
         }
-    }    
+    }
 
     public function obtenerUno($id)
     {
@@ -133,6 +137,34 @@ class DAOEquipos
             return $obj;
         } catch (PDOException $e) {
             return null;
+        } finally {
+            Conexion::desconectar();
+        }
+    }
+
+    public function actualizar($obj)
+    {
+        try {
+            $sql = "UPDATE Equipos SET NombreEquipo=?, Estudiante1=?, Estudiante2=?, Estudiante3=?, Coach=?, Institucion=?, FotoEquipo=?, Aprobado=? WHERE IdE=?";
+            $this->conectar();
+            $this->conexion->prepare($sql)->execute(
+                array(
+                    $obj->NombreEquipo,
+                    $obj->Estudiante1,
+                    $obj->Estudiante2,
+                    $obj->Estudiante3,
+                    $obj->Coach,
+                    $obj->Institucion,
+                    $obj->FotoEquipo,
+                    $obj->Aprobado,
+                    $obj->IdE
+                )
+            );
+            // Redirige a la página de ListaEquipos después de actualizar
+            header("Location: /ProyectoNew/Vista/ListaEquipos.php");
+            exit();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         } finally {
             Conexion::desconectar();
         }

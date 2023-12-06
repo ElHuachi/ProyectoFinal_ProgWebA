@@ -10,29 +10,42 @@
 
 <body>
     <?php
-    // session_start();
-    // if (!isset($_SESSION["usuario"])) {
-    //     header("Location:index.html");
-    // }
-    // require('../Principal/menu.php');
     require_once("../datos/daoCoach.php");
     $daoCoach = new DAOCoach();
     $coaches = $daoCoach->obtenerTodos();
+
+    require_once('../datos/daoEquipos.php');
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+
+    // Obtener el ID del equipo a editar desde la URL
+    $idEquipoEditar = isset($_GET["IdE"]) ? $_GET["IdE"] : null;
+
+    // Obtener datos del equipo si se proporciona un ID
+    $equipoEditar = null;
+    if ($idEquipoEditar) {
+        $daoEquipos = new DAOEquipos();
+        $equipoEditar = $daoEquipos->obtenerUno($idEquipoEditar);
+    }
+
+
     ?>
     <div class="container">
-        <h1>Registrar Equipo</h1>
-        <form action="procesar_formulario.php" method="post">
+        <h1><?php echo $equipoEditar ? 'Editar Equipo' : 'Registrar Equipo'; ?></h1>
+        <form action="Procesos/procesar_form.php" method="post">
+            <input type="hidden" name="idEquipoEditar" value="<?php echo $equipoEditar ? $equipoEditar->IdE : ''; ?>">
+
             <label for="Equipo">Nombre de Equipo:</label>
-            <input type="text" id="Equipo" name="Equipo" required>
+            <input type="text" id="Equipo" name="Equipo" value="<?php echo $equipoEditar ? $equipoEditar->NombreEquipo : ''; ?>" required>
 
             <label for="Estudiante1">Estudiante 1:</label>
-            <input type="text" id="Estudiante1" name="Estudiante1" required>
+            <input type="text" id="Estudiante1" name="Estudiante1" value="<?php echo $equipoEditar ? $equipoEditar->Estudiante1 : ''; ?>" required>
 
             <label for="Estudiante2">Estudiante 2:</label>
-            <input type="text" id="Estudiante2" name="Estudiante2" required>
+            <input type="text" id="Estudiante2" name="Estudiante2" value="<?php echo $equipoEditar ? $equipoEditar->Estudiante2 : ''; ?>" required>
 
             <label for="Estudiante3">Estudiante 3:</label>
-            <input type="text" id="Estudiante3" name="Estudiante3" required>
+            <input type="text" id="Estudiante3" name="Estudiante3" value="<?php echo $equipoEditar ? $equipoEditar->Estudiante3 : ''; ?>" required>
             <div>
                 <label for="Coach">Coach:</label>
                 <select id="Coach" name="Coach" required>
@@ -40,7 +53,8 @@
                     // Obtener la lista de coaches desde el DAOCoach
                     // Mostrar las opciones en el select
                     foreach ($coaches as $coach) {
-                        echo "<option value='" . $coach->NombreC . "'>" . $coach->NombreC . "</option>";
+                        $selected = ($equipoEditar && $equipoEditar->Coach == $coach->NombreC) ? "selected" : "";
+                        echo "<option value='" . $coach->NombreC . "' $selected>" . $coach->NombreC . "</option>";
                     }
                     ?>
                 </select>
@@ -53,22 +67,24 @@
                     $instituciones = $daoCoach->obtenerInstitucion();
                     // Mostrar las opciones en el select
                     foreach ($instituciones as $institucion) {
-                        echo "<option value='" . $institucion->NombreI . "'>" . $institucion->NombreI . "</option>";
+                        $selected = ($equipoEditar && $equipoEditar->Institucion == $institucion->NombreI) ? "selected" : "";
+                        echo "<option value='" . $institucion->NombreI . "' $selected>" . $institucion->NombreI . "</option>";
                     }
                     ?>
                 </select>
             </div>
-            <label for="foto">Foto:</label>
-            <input type="file" id="foto" accept="image/*" required>
-
-            <button type="button" id="submitBtn" onclick="SubmitEvent()">Enviar</button>
-
+            <div>
+                <label for="FotoEquipo">Foto:</label>
+                <input type="file" id="foto" name="FotoEquipo" accept="image/*" value="<?php echo $equipoEditar ? $equipoEditar->FotoEquipo : ''; ?>" required>
+            </div>
             <div class="button-container">
-                <input type="submit" value="Registrarse" id="Registrar" class="submit-button">
-                <input type="button" value="Regresar" id="Back" class="submit-button" onclick="window.location.href='../Principal/index.php';">
+                <input type="button" value="<?php echo $equipoEditar ? 'Guardar' : 'Registrarse'; ?>" id="Registrar" class="submit-button" onclick="guardarEquipo();">
+                <input type="button" value="Regresar" id="Back" class="submit-button" onclick="window.location.href='../Vista/listaEquipos.php';">
             </div>
         </form>
     </div>
 </body>
+<script src="../dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
+<script src="JS/validacion.js"></script>
 
 </html>

@@ -10,21 +10,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correo = $_POST["correo"];
     $contrasena = $_POST["contrasena"];
 
-    switch ($tipoUsuario) {
-        case "coach":
-            $dao = new DAOCoach();
-            $usuario = $dao->autenticarCoach($correo, $contrasena);
-            break;
-        case "administrador":
-            $dao = new DAOAdmin();
-            $usuario = $dao->autenticarAdministrador($correo, $contrasena);
-            break;
-        case "auxiliar":
-            $dao = new DAOAux();
-            $usuario = $dao->autenticarAuxiliar($correo, $contrasena);
-            break;
-        default:
-            $usuario = null;
+    $dao = null;
+    $usuario = null;
+
+    if ($tipoUsuario == "coach") {
+        $dao = new DAOCoach();
+        $usuario = $dao->autenticarCoach($correo, $contrasena);
+    } elseif ($tipoUsuario == "administrador") {
+        $dao = new DAOAdmin();
+        $usuario = $dao->autenticarAdministrador($correo, $contrasena);
+    } elseif ($tipoUsuario == "auxiliar") {
+        $dao = new DAOAux();
+        $usuario = $dao->autenticarAuxiliar($correo, $contrasena);
     }
 
     if ($usuario) {
@@ -34,11 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Puedes guardar otros datos del usuario si es necesario
         // $_SESSION['usuario_id'] = $usuario->id;
 
-        // Redirige al área correspondiente según el tipo de usuario
         header("Location: ../../Principal/index.php");
         exit();
     } else {
-        // Manejar error de autenticación, redirigir al formulario de inicio de sesión con un mensaje de error
         header("Location: ../login.php?error=1");
         exit();
     }

@@ -28,6 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 // Registro exitoso
                 $message = 'Usuario administrador registrado correctamente';
+                $redirectURL = "/ProyectoNew/Vista/ListaAdmin.php?message=" . urlencode($message);
+                header("Location: $redirectURL");
+                exit();
             } else {
                 // Error en el registro
                 $message = 'Error al registrar el usuario administrador';
@@ -52,6 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 // Registro exitoso
                 $message = 'Usuario auxiliar registrado correctamente';
+                $redirectURL = "/ProyectoNew/Vista/ListaAuxiliares.php?message=" . urlencode($message);
+                header("Location: $redirectURL");
+                exit();
             } else {
                 // Error en el registro
                 $message = 'Error al registrar el usuario auxiliar';
@@ -61,10 +67,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = 'Error: ' . $e->getMessage();
         }
     }
-
-    // Redirige al index con mensaje de confirmación o error
-    $redirectURL = "../../Principal/index.php?message=" . urlencode($message);
-    header("Location: $redirectURL");
-    exit();
 }
 ?>

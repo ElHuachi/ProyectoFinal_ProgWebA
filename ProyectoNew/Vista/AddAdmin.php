@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="../dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
     <title>Registro de Admin/Aux</title>
 </head>
 
@@ -52,26 +54,32 @@
             </div>
         </div>
     </div>
-
+<div class="container mt-5">
     <form id="registroForm" action="../Vista/Procesos/procesar_registro.php" method="post">
-        <label for="tipo_usuario">Selecciona el tipo de usuario:</label>
-        <select name="tipo_usuario" id="tipo_usuario" onchange="handleTipoUsuarioChange()">
-            <option value="admin">Administrador</option>
-            <option value="auxiliar">Auxiliar</option>
-        </select>
-        <label for="usuario">Usuario:</label>
-        <input type="text" name="usuario" id="usuario" required>
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password" required>
+    <div class="mb-3">
+                <label for="tipo_usuario" class="form-label">Selecciona el tipo de usuario:</label>
+                <select name="tipo_usuario" id="tipo_usuario" class="form-select" onchange="handleTipoUsuarioChange()" required>
+                    <option value="admin">Administrador</option>
+                    <option value="auxiliar">Auxiliar</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario:</label>
+                <input type="text" name="usuario" id="usuario" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña:</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
         <div id="admin_fields" style="display: none;">
         </div>
-        <div id="auxiliar_fields" style="display: none;">
+        <div class="mb-3" id="auxiliar_fields" style="display: none;">
             <label for="nombre_auxiliar">Nombre del Auxiliar:</label>
             <input type="text" name="nombre_auxiliar" id="nombre_auxiliar">
         </div>
         <input type="button" value="Registrar" onclick="validateAndSubmit()">
     </form>
-
+</div>
     <script src="../dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
     <script src="../Vista/Js/bootstrap.bundle.min.js"></script>
     <script src="../Vista/Js/ListaUsuarios.js"></script>

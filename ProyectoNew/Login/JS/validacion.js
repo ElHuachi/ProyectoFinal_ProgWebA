@@ -16,3 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+function guardarEquipo() {
+    // Envía el formulario
+    $("form").submit();
+}

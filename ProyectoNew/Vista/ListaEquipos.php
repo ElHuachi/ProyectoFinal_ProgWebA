@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="../dt/DataTables-1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../dt/Buttons-2.4.2/css/buttons.bootstrap5.min.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 
 <body>
@@ -36,16 +37,21 @@
                 if ($listaEquipos) {
                     foreach ($listaEquipos as $equipo) {
                         echo "<tr><td>{$equipo->NombreEquipo}</td>",
-                        "<td>{$equipo->Estudiante1}<br>{$equipo->Estudiante2}<br>{$equipo->Estudiante3}</td>",
+                        "<td>{$equipo->Estudiante1 }<br>{$equipo->Estudiante2 }<br>{$equipo->Estudiante3}</td>",
                         "<td>{$equipo->Coach}</td>",
                         "<td>{$equipo->Institucion}</td>",
                         "<td>{$equipo->Aprobado}</td>",
                         "<td>";
+                        // Verifica si el equipo está aprobado
                         if ($equipo->Aprobado != 1) {
-                            echo "<button class='btn btn-warning btn-aprobar' data-idE='{$equipo->IdE}'>Aprobar</button>";
+                            echo "<button class='btn btn-primary btn-editar' data-idE='{$equipo->IdE}'>Editar</button>",
+                            "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>",
+                            "<button class='btn btn-success btn-autorizar' id='btn-Autorizar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Autorizar</button>";
+                        } else {
+                            // Si está aprobado, no mostrar los botones de editar y autorizar
+                            echo "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>";
                         }
-                        echo "<button class='btn btn-danger btn-eliminar' id=btn-Autorizar data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>",
-                        "</td>",
+                        echo "</td>",
                         "</tr>";
                     }
                 } else {

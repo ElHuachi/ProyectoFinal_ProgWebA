@@ -53,23 +53,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll('.btn-aprobar').forEach(btn => {
+    document.querySelectorAll('.btn-autorizar').forEach(btn => {
         btn.addEventListener('click', function () {
             idEquipoAut = this.getAttribute('data-idE');
             nombreEquipoAut = this.getAttribute('data-equipo');
             document.getElementById("spnPersona").innerText = nombreEquipoAut;
-            autorizarEquipo(idEquipoAut); // Llamar a la función con el ID del equipo
+            autorizarEquipo(idEquipoAut);
+        });
+    });
+
+    document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const idEquipoEditar = this.getAttribute('data-idE');
+            window.location.href = `../Login/Equipos.php?IdE=${idEquipoEditar}`;
         });
     });
 
     document.getElementById('btn-Confirmar').addEventListener('click', function () {
         confirmarEliminar();
-    });    
-    
-    document.getElementById('btn-Autorizar').addEventListener('click', function () {
-        autorizarEquipo(idEquipoAut);
     });
-    
 });
 
 function confirmarEliminar() {
@@ -77,6 +79,10 @@ function confirmarEliminar() {
 }
 
 function autorizarEquipo(idEquipo) {
+    // Oculta el botón de "Autorizar" y muestra el de "Eliminar"
+    document.getElementById(`btn-Autorizar-${idEquipo}`).style.display = 'none';
+    document.getElementById(`btn-Eliminar-${idEquipo}`).style.display = 'inline';
+
+    // Realiza la redirección después de cambiar la aprobación
     window.location.href = `../Vista/Procesos/procesar_eliminar_equipo.php?IdE=${idEquipo}&Aprobado=1`;
 }
-
