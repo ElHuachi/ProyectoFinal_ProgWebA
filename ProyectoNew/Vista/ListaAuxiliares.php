@@ -26,7 +26,7 @@
   $data = $daoAux->obtenerTodosPermisos();
   ?>
   <div class="container">
-    <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>
+    <a class="btn btn-success mt-5 mb-3" href="../Vista/AddAdmin.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>

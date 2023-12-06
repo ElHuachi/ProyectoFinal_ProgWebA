@@ -9,6 +9,7 @@
 <body>
     <?php
     require_once("../datos/daoCoach.php");
+    // require('../Principal/menu.php');
     $daoCoach = new DAOCoach();
     ?>
     <div class="container">

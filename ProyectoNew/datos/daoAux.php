@@ -1,6 +1,7 @@
 <?php
-require_once("../datos/Conexion.php");
-require_once("../modelos/auxiliar.php");
+require_once("conexion.php");
+require_once __DIR__ . '/../modelos/auxiliar.php';
+
 class DaoAux
 {
     private $conexion;
@@ -9,7 +10,7 @@ class DaoAux
         try {
             $this->conexion = Conexion::conectar();
         } catch (Exception $e) {
-            die($e->getMessage()); /*Si la conexion no se establece se cortara el flujo enviando un mensaje con el error*/
+            throw new Exception("Error al conectar: " . $e->getMessage());
         }
     }
 
@@ -153,11 +154,11 @@ class DaoAux
         }
     }
 
-    public function insert(){
+    public function insertar($obj) {
         try {
+            $sql = "INSERT INTO auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES (?, ?, sha2(?,256), ?)";
             $this->conectar();
-            $sentenciaSQL = $this->conexion->prepare("INSERT INTO auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES (?, ?, ?, ?)");
-            $sentenciaSQL->execute();
+            $this->conexion->prepare($sql)->execute([$obj->NombreAx, $obj->UsuarioAx, $obj->PassAx, $obj->idTipo]);
             return true;
         } catch (PDOException $e) {
             return false;

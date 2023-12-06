@@ -13,6 +13,11 @@ class DAOCoach
     private $conexion;
     private function conectar()
     {
+        //creamos una instancia de la clase conexión
+        if(session_status()){
+
+        }
+
         try {
             $this->conexion = Conexion::conectar();
         } catch (Exception $e) {

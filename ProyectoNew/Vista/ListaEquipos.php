@@ -25,7 +25,6 @@
   $listaEquipos = $dao->obtenerTodos();
   ?>
   <div class="container">
-    <a class="btn btn-success mt-5 mb-3" href="../Login/Equipos.php">Agregar</a>
     <table id="lista" class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -33,9 +32,11 @@
           <th>Integrantes</th>
           <th>Coach</th>
           <th>Institución</th>
-          <th><input type="checkbox" id="check"> Aprobado</th>
+          <th>Aprobado</th>
+          <th>Operaciones</th>
         </tr>
       </thead>
+
       <tbody>
         <?php
         if ($listaEquipos) {
@@ -47,6 +48,10 @@
             "<td>" . $equipo->getCoach() . "</td>",
             "<td>" . $equipo->getNombreI() . "</td>",
             "<td>" . $equipo->getAprobado() . "</td>",
+            "<td>",
+            "<button class='btn btn-warning btn-aprobar' onclick='confirmar(" . $equipo->Aprobado . ",\"" . $equipo->NombreEquipo . "\")'>Aprobar</button>",
+            "<button class='btn btn-danger btn-eliminar' onclick='confirmar(" . $equipo->IdE . ",\"" . $equipo->NombreEquipo . "\")'>Eliminar</button>",
+            "</td>",
             "</td>",
             "</tr>";
           }

@@ -89,6 +89,7 @@
             <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a>
             <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a>
             <a href="../Vista/ListaConcursos.php">Lista Concursos</a>
+            <a href="../Vista/AddAdmin.php">Sistema para agregar Admin/Aux</a>
         </div>
     </header>
 

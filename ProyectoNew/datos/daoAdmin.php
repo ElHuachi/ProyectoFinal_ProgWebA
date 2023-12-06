@@ -1,6 +1,6 @@
 <?php
-require_once("../datos/Conexion.php");
-require_once("../modelos/admin.php");
+require_once("conexion.php");
+require_once __DIR__ . '/../modelos/admin.php';
 class DaoAdmin
 {
     private $conexion;
@@ -9,7 +9,7 @@ class DaoAdmin
         try {
             $this->conexion = Conexion::conectar();
         } catch (Exception $e) {
-            die($e->getMessage()); /*Si la conexion no se establece se cortara el flujo enviando un mensaje con el error*/
+            throw new Exception("Error al conectar: " . $e->getMessage());
         }
     }
     public function login($username, $password)
@@ -41,22 +41,14 @@ class DaoAdmin
      * Metodo que permite insertar un nuevo registro en la tabla
      * de usuarios
      */
-    public function insertar($obj)
-    {
+    public function insertar($obj) {
         try {
-            $sql = "INSERT INTO admin(idTipo,UsuarioAd,PassAd) values(?,?,?)";
-
+            $sql = "INSERT INTO Administradores (idTipo, UsuarioAd, PassAd) VALUES (?, ?, sha2(?,256))";
             $this->conectar();
-            $this->conexion->prepare($sql)->execute(
-                array(
-                    $obj->idTipo,
-                    $obj->UsuarioAd,
-                    $obj->PassAd
-                )
-            );
+            $this->conexion->prepare($sql)->execute([$obj->idTipo, $obj->UsuarioAd, $obj->PassAd]);
             return true;
         } catch (PDOException $e) {
-            return false;
+            throw new Exception("Error al insertar: " . $e->getMessage() . ". SQL: $sql");
         } finally {
             Conexion::desconectar();
         }
@@ -68,7 +60,7 @@ class DaoAdmin
     public function update($id, $obj)
     {
         try {
-            $sql = "UPDATE admin SET idTipo=?,UsuarioAd=?,PassAd=? WHERE id=?";
+            $sql = "UPDATE Administradores SET idTipo=?,UsuarioAd=?,PassAd=? WHERE id=?";
 
             $this->conectar();
             $this->conexion->prepare($sql)->execute(
@@ -89,7 +81,7 @@ class DaoAdmin
     public function eliminar($id)
     {
         try {
-            $sql = "DELETE FROM admin WHERE id=?";
+            $sql = "DELETE FROM Administradores WHERE id=?";
 
             $this->conectar();
             $this->conexion->prepare($sql)->execute(array($id));
@@ -286,5 +278,4 @@ class DaoAdmin
             Conexion::desconectar();
         }
     }
-
 }

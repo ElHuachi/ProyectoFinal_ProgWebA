@@ -108,7 +108,7 @@
       </a>
     </div>
   </footer>
-  <script src="JS/tema.js"></script>
+  <!-- <script src="JS/tema.js"></script> -->
 </body>
 
 </html>
