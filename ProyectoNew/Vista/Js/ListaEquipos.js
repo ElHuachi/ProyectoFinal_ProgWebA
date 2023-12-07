@@ -79,10 +79,11 @@ function confirmarEliminar() {
 }
 
 function autorizarEquipo(idEquipo) {
-    // Oculta el botón de "Autorizar" y muestra el de "Eliminar"
-    document.getElementById(`btn-Autorizar-${idEquipo}`).style.display = 'none';
-    document.getElementById(`btn-Eliminar-${idEquipo}`).style.display = 'inline';
-
-    // Realiza la redirección después de cambiar la aprobación
-    window.location.href = `../Vista/Procesos/procesar_eliminar_equipo.php?IdE=${idEquipo}&Aprobado=1`;
+    const btnAutorizar = document.getElementById(`btn-Autorizar-${idEquipo}`);
+    if (btnAutorizar) {
+        btnAutorizar.style.display = 'none';
+        window.location.href = `../Vista/Procesos/procesar_eliminar_equipo.php?IdE=${idEquipo}&Aprobado=1`;
+    } else {
+        console.error(`No se pudo encontrar el botón de "Autorizar" con ID: btn-Autorizar-${idEquipo}`);
+    }
 }

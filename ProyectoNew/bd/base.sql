@@ -74,7 +74,7 @@ create table Auxiliares (
 insert into Tipo values ('Ax', 'Auxiliar');
 insert into Tipo values ('Co', 'Coach');
 insert into Tipo values ('Ad', 'Administrador');
-insert into Administradores values (default, 'Ad', 'Admin',sha2('123456',256));
+insert into Administradores values (default, 'Ad', 'Admin','123456');
 select * from Tipo;
 SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd, Administradores.PassAd
 FROM Administradores
@@ -89,16 +89,18 @@ INSERT INTO Concursos (NombreC, FechaI, FechaC, HoraC, LugarC) VALUES ('Concurso
 INSERT INTO Concursos (NombreC, FechaI, FechaC, HoraC, LugarC) VALUES ('Concurso2', '2022-12-12', '2023-02-01', '14:00:00', 'Lugar2');
 
 -- Insertar datos en la tabla Coach
-INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach1', 'coach1@example.com', 'Institucion1', 'Co', sha2('password', 256));
-INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach2', 'coach2@example.com', 'Institucion2', 'Co', sha2('password', 256));
+INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach1', 'coach1@example.com', 'Institucion1', 'Co', 'password');
+INSERT INTO Coach (NombreC, CorreoC, Institucion, idTipo, PassCo) VALUES ('Coach2', 'coach2@example.com', 'Institucion2', 'Co', 'password2');
+SELECT IdC, NombreC FROM Coach WHERE PassCo='password';
+
 
 -- Insertar datos en la tabla Equipos
 INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo1', 'Estudiante1', 'Estudiante2', 'Estudiante3', 'Institucion1', 'Coach1', '', 0);
 INSERT INTO Equipos (NombreEquipo, Estudiante1, Estudiante2, Estudiante3, Institucion, Coach, FotoEquipo, Aprobado) VALUES ('Equipo2', 'Estudiante4', 'Estudiante5', 'Estudiante6', 'Institucion2', 'Coach2', '', 0);
 
 -- Insertar datos en la tabla Auxiliares
-INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar1', 'aux1', sha2('password', 256), 'Ax');
-INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar2', 'aux2', sha2('password', 256), 'Ax');
+INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar1', 'aux1', 'password', 'Ax');
+INSERT INTO Auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES ('Auxiliar2', 'aux2', 'password', 'Ax');
 
 -- Verificar los datos insertados
 SELECT * FROM Instituciones;
@@ -108,6 +110,8 @@ SELECT * FROM Equipos;
 SELECT * FROM Auxiliares;
 select * FROM TIPO;
 SELECT * FROM Administradores;
+SELECT * FROM Equipos WHERE Coach = 'Coach1';
+SELECT idA, idTipo, UsuarioAd FROM Administradores WHERE UsuarioAd = 'Admin' AND PassAd = '123456';
 SELECT PassAd FROM Administradores;
 SELECT Auxiliares.idAx, Tipo.Nombre AS Tipo, Auxiliares.UsuarioAx
 FROM Auxiliares

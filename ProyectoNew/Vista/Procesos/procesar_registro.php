@@ -9,10 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST["usuario"];
     $password = $_POST["password"];
 
-    // Obtener idTipo según el tipo de usuario
     $idTipo = ($tipoUsuario === "admin") ? "Ad" : "Ax";
 
-    // Crear instancias de los DAOs según el tipo de usuario
     if ($tipoUsuario === "admin") {
         $obj = new admin();
         $obj->idTipo = $idTipo;
@@ -22,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $daoAdmin = new DaoAdmin();
 
         try {
-            // Utilizar una consulta preparada para evitar SQL injection
             $result = $daoAdmin->insertar($obj);
 
             if ($result) {
@@ -36,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $message = 'Error al registrar el usuario administrador';
             }
         } catch (Exception $e) {
-            // Manejar cualquier excepción
             $message = 'Error: ' . $e->getMessage();
         }
     } elseif ($tipoUsuario === "auxiliar") {
@@ -49,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $daoAux = new DaoAux();
 
         try {
-            // Utilizar una consulta preparada para evitar SQL injection
             $result = $daoAux->insertar($obj);
 
             if ($result) {
@@ -63,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $message = 'Error al registrar el usuario auxiliar';
             }
         } catch (Exception $e) {
-            // Manejar cualquier excepción
+
             $message = 'Error: ' . $e->getMessage();
         }
     }

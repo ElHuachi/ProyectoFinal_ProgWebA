@@ -1,9 +1,11 @@
 <?php
-session_start(); // Inicia la sesión al principio del script
+session_start();
 
 require_once("../../datos/daoCoach.php");
-require_once("../../datos/daoAdministrador.php");
-require_once("../../datos/daoAuxiliar.php");
+require_once("../../datos/daoAdmin.php");
+require_once("../../datos/daoAux.php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipoUsuario = $_POST["tipo_usuario"];
@@ -16,30 +18,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($tipoUsuario == "coach") {
         $dao = new DAOCoach();
         $usuario = $dao->autenticarCoach($correo, $contrasena);
+
+        if ($usuario) {
+            $_SESSION['tipo_usuario'] = $tipoUsuario;
+            $_SESSION['usuario_id'] = $usuario->IdC; // Ajusta esto según tu estructura de objetos
+            $_SESSION['usuario_nombre'] = $usuario->NombreC; // Ajusta esto según tu estructura de objetos
+            header("Location: ../../Principal/index.php");
+            exit();
+        }
     } elseif ($tipoUsuario == "administrador") {
         $dao = new DAOAdmin();
         $usuario = $dao->autenticarAdministrador($correo, $contrasena);
+
+        if ($usuario) {
+            $_SESSION['tipo_usuario'] = $tipoUsuario;
+            header("Location: ../../Principal/index.php");
+            exit();
+        }
     } elseif ($tipoUsuario == "auxiliar") {
         $dao = new DAOAux();
         $usuario = $dao->autenticarAuxiliar($correo, $contrasena);
+
+        if ($usuario) {
+            $_SESSION['tipo_usuario'] = $tipoUsuario;
+            header("Location: ../../Principal/index.php");
+            exit();
+        }
     }
 
-    if ($usuario) {
-        // Guarda el tipo de usuario en la sesión
-        $_SESSION['tipo_usuario'] = $tipoUsuario;
-
-        // Puedes guardar otros datos del usuario si es necesario
-        // $_SESSION['usuario_id'] = $usuario->id;
-
-        header("Location: ../../Principal/index.php");
-        exit();
-    } else {
-        header("Location: ../login.php?error=1");
+    if (!$usuario) {
+        header("Location: ../login.php?error=1"); // Autenticación fallida
         exit();
     }
 } else {
-    // Redirigir a la página de inicio de sesión si no se recibieron datos por POST
-    header("Location: ../login.php?error=2");
+    header("Location: ../login.php?error=2"); // Método de solicitud no válido
     exit();
 }
-?>

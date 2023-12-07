@@ -13,11 +13,16 @@
 
 <body>
     <?php
+    session_start();
+
     require('../Principal/menu.php');
     require('../datos/daoCoach.php');
+    $coachId = $_SESSION['usuario_id'];
+
     $daoCoach = new DAOCoach();
-    $coach = $daoCoach->obtenerTodos();
+    $equipos = $daoCoach->obtenerTodos();
     ?>
+
     <div class="container">
         <table id="lista" class="table table-striped table-bordered">
             <thead>
@@ -30,21 +35,21 @@
             </thead>
             <tbody>
                 <?php
-                if ($coach) {
-                    foreach ($coach as $coachItem) {
-                        echo "<tr>",
-                        "<td>" . $coachItem->NombreC . "</td>",
-                        "<td>" . $coachItem->CorreoC . "</td>",
-                        "<td>" . $coachItem->Institucion . "</td>",
-                        "<td>",
-                        "<button class='btn btn-danger btn-eliminar' data-idC='{$coachItem->IdC}' data-usuario='{$coachItem->NombreC}''>Eliminar</button>",
-                        "</td>",
-                        "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+            if ($equipos) {
+                foreach ($equipos as $coachItem) {
+                    echo "<tr>",
+                    "<td>" . $coachItem->NombreC . "</td>",
+                    "<td>" . $coachItem->CorreoC . "</td>",
+                    "<td>" . $coachItem->Institucion . "</td>",
+                    "<td>",
+                    "<button class='btn btn-danger btn-eliminar' data-idC='{$coachItem->IdC}' data-usuario='{$coachItem->NombreC}'>Eliminar</button>",
+                    "</td>",
+                    "</tr>";
                 }
-                ?>
+            } else {
+                echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+            }
+            ?>
             </tbody>
         </table>
     </div>
@@ -79,4 +84,5 @@
     <script src="../dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
     <script src="../Vista/Js/ListaCoach.js"></script>
 </body>
+
 </html>

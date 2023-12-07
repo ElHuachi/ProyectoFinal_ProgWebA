@@ -18,15 +18,8 @@
 
 <body>
   <?php
-
-  // session_start();
-  // if (!isset($_SESSION["usuario"])) {
-  //   header("Location:index.html");
-  // }
-
   require('../Principal/menu.php');
   require('../datos/daoAdmin.php');
-  // session_start();
   $daoAdmin = new DaoAdmin();
   $data = $daoAdmin->obtenerTodosPermisos();
   ?>

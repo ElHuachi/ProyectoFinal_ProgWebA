@@ -15,74 +15,45 @@ class DaoAdmin
     public function autenticarAdministrador($usuario, $contrasena)
     {
         try {
-            $query = "SELECT id, UsuarioAd FROM Administrador WHERE UsuarioAd = ? AND PassAd = SHA2(?, 224)";
-            $statement = $this->conexion->prepare($query);
-            $statement->bindParam(1, $usuario);
-            $statement->bindParam(2, $contrasena);
-            $statement->execute();
+            $query = "SELECT idA, idTipo, UsuarioAd FROM Administradores WHERE UsuarioAd = ? AND PassAd = ?";
+            $this->conectar();
 
+            // Se prepara la consulta SQL
+            $statement = $this->conexion->prepare($query);
+            // Se ejecuta la consulta con los parámetros
+            $statement->execute([$usuario, $contrasena]);
+
+            // Se obtiene el resultado como un objeto
             $resultado = $statement->fetch(PDO::FETCH_OBJ);
 
+            // Si hay un resultado, se crea un objeto admin
             if ($resultado) {
                 $admin = new admin();
-                $admin->id = $resultado->id;
+                $admin->id = $resultado->idA;
+                $admin->idTipo = $resultado->idTipo; // Añade esta línea para obtener idTipo
                 $admin->UsuarioAd = $resultado->UsuarioAd;
                 return $admin;
             }
 
             return null;
         } catch (PDOException $e) {
+            // Imprime el mensaje de error
+            echo "Error en autenticarAdministrador: " . $e->getMessage();
             return null;
         } finally {
             Conexion::desconectar();
         }
     }
 
-
-    public function logout()
-    {
-        session_start();
-        session_destroy();
-        header("Location: ../index.php");
-    }
-    /**
-     * Metodo que permite insertar un nuevo registro en la tabla
-     * de usuarios
-     */
     public function insertar($obj)
     {
         try {
-            $sql = "INSERT INTO Administradores (idTipo, UsuarioAd, PassAd) VALUES (?, ?, sha2(?,256))";
+            $sql = "INSERT INTO Administradores (idTipo, UsuarioAd, PassAd) VALUES (?, ?, ?)";
             $this->conectar();
             $this->conexion->prepare($sql)->execute([$obj->idTipo, $obj->UsuarioAd, $obj->PassAd]);
             return true;
         } catch (PDOException $e) {
             throw new Exception("Error al insertar: " . $e->getMessage() . ". SQL: $sql");
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-    /**
-     * Metodo que permite actualizar un registro en la tabla
-     * de usuarios
-     */
-    public function update($id, $obj)
-    {
-        try {
-            $sql = "UPDATE Administradores SET idTipo=?,UsuarioAd=?,PassAd=? WHERE id=?";
-
-            $this->conectar();
-            $this->conexion->prepare($sql)->execute(
-                array(
-                    $obj->idTipo,
-                    $obj->UsuarioAd,
-                    $obj->PassAd,
-                    $id
-                )
-            );
-            return true;
-        } catch (PDOException $e) {
-            return false;
         } finally {
             Conexion::desconectar();
         }
@@ -106,77 +77,6 @@ class DaoAdmin
             Conexion::desconectar();
         }
     }
-
-
-    public function obtenerTipoPermisos()
-    {
-        try {
-            $this->conectar();
-
-            $lista = array();
-            /*Se arma la sentencia sql para seleccionar todos los registros de la base de datos*/
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM Tipo");
-
-            //Se ejecuta la sentencia sql, retorna un cursor con todos los elementos
-            $sentenciaSQL->execute();
-
-            //$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            /*Podemos obtener un cursor (resultado con todos los renglones como 
-            un arreglo de arreglos asociativos o un arreglo de objetos*/
-            /*Se recorre el cursor para obtener los datos*/
-            foreach ($resultado as $row) {
-                $obj = new Tipo();
-
-                $obj->id = $row->id;
-                $obj->Nombre = $row->Nombre;
-
-                $lista[] = $obj;
-            }
-
-            return $lista;
-        } catch (PDOException $e) {
-            return null;
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-    public function obtenerTodos()
-    {
-        try {
-            $this->conectar();
-
-            $lista = array();
-            /*Se arma la sentencia sql para seleccionar todos los registros de la base de datos*/
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM Administradores");
-
-            //Se ejecuta la sentencia sql, retorna un cursor con todos los elementos
-            $sentenciaSQL->execute();
-
-            //$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            /*Podemos obtener un cursor (resultado con todos los renglones como 
-            un arreglo de arreglos asociativos o un arreglo de objetos*/
-            /*Se recorre el cursor para obtener los datos*/
-            foreach ($resultado as $row) {
-                $obj = new admin();
-
-                $obj->id = $row->id;
-                $obj->idTipo = $row->idTipo;
-                $obj->UsuarioAd = $row->UsuarioAd;
-                $obj->PassAd = $row->PassAd;
-
-                $lista[] = $obj;
-            }
-
-            return $lista;
-        } catch (PDOException $e) {
-            return null;
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-
     public function obtenerTodosPermisos()
     {
         try {
@@ -208,86 +108,6 @@ class DaoAdmin
             }
 
             return $lista;
-        } catch (PDOException $e) {
-            // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
-            echo "Error: " . $e->getMessage();
-            return null;
-        } finally {
-            // Siempre desconecta después de realizar la operación
-            Conexion::desconectar();
-        }
-    }
-
-    public function obtenerUno()
-    {
-        try {
-            $this->conectar();
-
-            $obj = null;
-
-            // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
-            $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
-                                                    FROM Administradores
-                                                    JOIN Tipo ON Administradores.idTipo = Tipo.id
-                                                    WHERE Administradores.idA = ?");
-
-            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
-            $sentenciaSQL->execute(array($_SESSION["idA"]));
-
-            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
-
-            // Se recorre el cursor para obtener los datos
-            if ($resultado) {
-                // Se crea un objeto tipo stdClass para almacenar los datos
-                $obj = new stdClass();
-
-                // Se asignan los valores del resultado al objeto
-                $obj->idA = $resultado->idA;
-                $obj->Tipo = $resultado->Tipo;
-                $obj->UsuarioAd = $resultado->UsuarioAd;
-            }
-
-            return $obj;
-        } catch (PDOException $e) {
-            // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
-            echo "Error: " . $e->getMessage();
-            return null;
-        } finally {
-            // Siempre desconecta después de realizar la operación
-            Conexion::desconectar();
-        }
-    }
-
-    public function autenticar()
-    {
-        try {
-            $this->conectar();
-
-            $obj = null;
-
-            // Se arma la sentencia SQL para seleccionar todos los registros de la base de datos
-            $sentenciaSQL = $this->conexion->prepare("SELECT Administradores.idA, Tipo.Nombre AS Tipo, Administradores.UsuarioAd
-                                                    FROM Administradores
-                                                    JOIN Tipo ON Administradores.idTipo = Tipo.id
-                                                    WHERE Administradores.idA = ?");
-
-            // Se ejecuta la sentencia SQL, retorna un cursor con todos los elementos
-            $sentenciaSQL->execute(array($_SESSION["idA"]));
-
-            $resultado = $sentenciaSQL->fetch(PDO::FETCH_OBJ);
-
-            // Se recorre el cursor para obtener los datos
-            if ($resultado) {
-                // Se crea un objeto tipo stdClass para almacenar los datos
-                $obj = new stdClass();
-
-                // Se asignan los valores del resultado al objeto
-                $obj->idA = $resultado->idA;
-                $obj->Tipo = $resultado->Tipo;
-                $obj->UsuarioAd = $resultado->UsuarioAd;
-            }
-
-            return $obj;
         } catch (PDOException $e) {
             // Manejo de excepciones, puedes imprimir el mensaje de error o realizar otras acciones según tus necesidades
             echo "Error: " . $e->getMessage();

@@ -3,17 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>Registro/Edicion de equipos</title>
     <link rel="stylesheet" href="CSS/estilos.css">
     <link rel="icon" href="https://lh6.googleusercontent.com/DQqOseiOF2DibeQSu3EApJu3EE7j7JIVBEiJqEcLE1ScAIBUdYfRki5lDMPRYkuTQ8VdKHnmJ6GMV9gW7y17X5AbHYBfG9e8eT-WT2q13BgJ0HiW">
 </head>
 
 <body>
     <?php
+
     require_once("../datos/daoCoach.php");
     $daoCoach = new DAOCoach();
     $coaches = $daoCoach->obtenerTodos();
-
+    session_start();
+    $nombreCoach = $_SESSION['usuario_nombre'];
     require_once('../datos/daoEquipos.php');
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
@@ -47,17 +49,7 @@
             <label for="Estudiante3">Estudiante 3:</label>
             <input type="text" id="Estudiante3" name="Estudiante3" value="<?php echo $equipoEditar ? $equipoEditar->Estudiante3 : ''; ?>" required>
             <div>
-                <label for="Coach">Coach:</label>
-                <select id="Coach" name="Coach" required>
-                    <?php
-                    // Obtener la lista de coaches desde el DAOCoach
-                    // Mostrar las opciones en el select
-                    foreach ($coaches as $coach) {
-                        $selected = ($equipoEditar && $equipoEditar->Coach == $coach->NombreC) ? "selected" : "";
-                        echo "<option value='" . $coach->NombreC . "' $selected>" . $coach->NombreC . "</option>";
-                    }
-                    ?>
-                </select>
+                <input type="hidden" id="Coach" name="Coach" value="<?php echo $nombreCoach; ?>">
             </div>
             <div>
                 <label for="NombreI">Nombre de Institución:</label>

@@ -14,10 +14,16 @@
 
 <body>
     <?php
+    session_start();
     require('../Principal/menu.php');
     require_once('../Datos/daoEquipos.php');
+    $nombreCoach = $_SESSION['usuario_nombre'];
     $dao = new DAOEquipos();
-    $listaEquipos = $dao->obtenerTodos();
+    if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'administrador' || $_SESSION['tipo_usuario'] === 'auxiliar')) {
+        $listaEquipos = $dao->obtenerTodos();
+    } else {
+        $listaEquipos = $dao->obtenerEquiposPorCoach($nombreCoach);
+    }
     ?>
     <div class="container">
         <table id="lista" class="table table-striped table-bordered">
@@ -31,37 +37,40 @@
                     <th>Operaciones</th>
                 </tr>
             </thead>
-
             <tbody>
                 <?php
                 if ($listaEquipos) {
                     foreach ($listaEquipos as $equipo) {
-                        echo "<tr><td>{$equipo->NombreEquipo}</td>",
-                        "<td>{$equipo->Estudiante1 }<br>{$equipo->Estudiante2 }<br>{$equipo->Estudiante3}</td>",
+                        echo "<tr>",
+                        "<td>{$equipo->NombreEquipo}</td>",
+                        "<td>{$equipo->Estudiante1}<br>{$equipo->Estudiante2}<br>{$equipo->Estudiante3}</td>",
                         "<td>{$equipo->Coach}</td>",
                         "<td>{$equipo->Institucion}</td>",
                         "<td>{$equipo->Aprobado}</td>",
                         "<td>";
-                        // Verifica si el equipo está aprobado
-                        if ($equipo->Aprobado != 1) {
-                            echo "<button class='btn btn-primary btn-editar' data-idE='{$equipo->IdE}'>Editar</button>",
-                            "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>",
-                            "<button class='btn btn-success btn-autorizar' id='btn-Autorizar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Autorizar</button>";
-                        } else {
-                            // Si está aprobado, no mostrar los botones de editar y autorizar
-                            echo "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>";
+                        // Botón de autorizar solo para administrador y auxiliar
+                        if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'administrador' || $_SESSION['tipo_usuario'] === 'auxiliar')) {
+                            // Verifica si el equipo está aprobado
+                            if ($equipo->Aprobado != 1) {
+                                echo "<button class='btn btn-success btn-autorizar' id='btn-Autorizar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Autorizar</button>",
+                                "<button class='btn btn-primary btn-editar' data-idE='{$equipo->IdE}'>Editar</button>";
+                            } else {
+                                echo "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>";
+                            }
+                        } elseif ($equipo->Aprobado != 1){
+                            // Botón de editar solo para coach
+                            echo "<button class='btn btn-primary btn-editar' data-idE='{$equipo->IdE}'>Editar</button>";
                         }
                         echo "</td>",
                         "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
+                    echo "<tr><td colspan='6'>No se encontraron registros</td></tr>";
                 }
                 ?>
             </tbody>
         </table>
     </div>
-
     <div class="modal" id="mdlConfirmacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -79,7 +88,6 @@
             </div>
         </div>
     </div>
-
     <script src="../Vista/Js/bootstrap.bundle.min.js"></script>
     <script src="../dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
     <script src="../dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>

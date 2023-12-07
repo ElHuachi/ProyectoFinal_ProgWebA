@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     AdminConfirmacion = new bootstrap.Modal(document.getElementById('mdlConfirmacion'));
 
-    // Agregamos un listener al botón eliminar para pasar el valor adecuado
     document.querySelectorAll('.btn-eliminar').forEach(btn => {
         btn.addEventListener('click', function () {
             confirmar(this.getAttribute('data-id'), this.getAttribute('data-usuario'));
@@ -64,6 +63,5 @@ function confirmarEliminar() {
 }
 
 function eliminarUsuario(id) {
-    // Se cambia la URL de redirección
     window.location.href = `../Vista/Procesos/procesar_eliminar.php?idA=${id}`;
 }

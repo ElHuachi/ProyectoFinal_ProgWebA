@@ -17,8 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IdC"])){
     } catch (Exception $e) {
         $message = 'Error: ' . $e->getMessage();
     }
-
-    // Redirige al index con mensaje de confirmación o error
     $redirectURL = "../ListaCoach.php?message=" . urlencode($message);
     header("Location: $redirectURL");
     exit();

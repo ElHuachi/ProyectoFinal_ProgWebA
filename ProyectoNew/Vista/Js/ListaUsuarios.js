@@ -23,9 +23,6 @@ function validateAndSubmit() {
     var usuario = document.getElementById('usuario').value;
     var password = document.getElementById('password').value;
     var nombreAuxiliar = document.getElementById('nombre_auxiliar').value;
-
-    // Validaciones (puedes agregar más según tus necesidades)
-
     if (!usuario || !password) {
         showErrorModal('Por favor, completa todos los campos importantes.');
         return;
@@ -76,16 +73,12 @@ function registerUserInDB() {
     var usuario = document.getElementById('usuario').value;
     var password = document.getElementById('password').value;
     var nombreAuxiliar = document.getElementById('nombre_auxiliar').value;
-
-    // Objeto con los datos a enviar al servidor
     var userData = {
         tipoUsuario: tipoUsuario,
         usuario: usuario,
         password: password,
         nombreAuxiliar: nombreAuxiliar
     };
-
-    // Crear un formulario dinámicamente y enviarlo
     var form = document.createElement('form');
     form.action = '../Vista/Procesos/procesar_registro.php';
     form.method = 'POST';

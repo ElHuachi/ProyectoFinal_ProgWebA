@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Iniciar Sesión</h1>
-        <form method="post" class="login-form">
+        <form method="post" action="/ProyectoNew/Login/Procesos/proceso_inicio.php" class="login-form">
             <label for="tipo_usuario">Tipo de Usuario:</label>
             <select id="tipo_usuario" name="tipo_usuario" required>
                 <option value="coach">Coach</option>
@@ -17,7 +17,7 @@
                 <option value="auxiliar">Auxiliar</option>
             </select>
             <label for="correo">Correo:</label>
-            <input type="email" id="correo" name="correo" required>
+            <input type="text" id="correo" name="correo" required>
             <label for="contrasena">Contraseña:</label>
             <input type="password" id="contrasena" name="contrasena" required>
             <div class="button-container">
@@ -25,9 +25,15 @@
                 <input type="button" value="Regresar" id="back" class="submit-button" onclick="window.location.href='../Principal/index.php';">
             </div>
         </form>
+
+        <?php
+        if (isset($_GET['error']) && $_GET['error'] == 1) {
+            echo "<p>Error: Autenticación fallida</p>";
+        } elseif (isset($_GET['error']) && $_GET['error'] == 2) {
+            echo "<p>Error: No se recibieron datos por POST</p>";
+        }
+        ?>
     </div>
 </body>
-<!-- <script src="../Login/JS/validacion.js"></script> -->
+<script src="../Login/JS/validacion.js"></script>
 </html>
-
-

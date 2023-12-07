@@ -20,13 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IdE"])) {
     } catch (Exception $e) {
         $message = 'Error: ' . $e->getMessage();
     }
-
-    // Redirige al index con mensaje de confirmación o error
     $redirectURL = "../ListaEquipos.php?message=" . urlencode($message);
     header("Location: $redirectURL");
     exit();
 } else {
-    // Redirige a una página de error si se accede directamente a procesos.php sin el ID
     header("Location: ../error.php");
     exit();
 }

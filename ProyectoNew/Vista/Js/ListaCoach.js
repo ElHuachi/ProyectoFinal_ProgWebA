@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     CoachConfirmacion = new bootstrap.Modal(document.getElementById('mdlConfirmacion'));
 
-    // Agregamos un listener al botón eliminar para pasar el valor adecuado
     document.querySelectorAll('.btn-eliminar').forEach(btn => {
         btn.addEventListener('click', function () {
             idCoachEliminar = this.getAttribute('data-idC');

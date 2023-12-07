@@ -20,9 +20,6 @@
 <body>
   <?php
   require('../Principal/menu.php');
-  /* require_once('../datos/daoUsuario.php');
-  $dao = new DAOUsuario();
-  $ListaUsuarios = $dao->obtenerTodos();  */
   ?>
   <div class="container">
     <a class="btn btn-success mt-5 mb-3" href="usuario.php">Agregar</a>

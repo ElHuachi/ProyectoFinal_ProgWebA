@@ -13,32 +13,6 @@ class DaoAux
             throw new Exception("Error al conectar: " . $e->getMessage());
         }
     }
-
-    public function obtenerTodos()
-    {
-        try {
-            $this->conectar();
-            $lista = array();
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM auxiliares");
-            $sentenciaSQL->execute();
-            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            foreach ($resultado as $row) {
-                $auxiliar = new auxiliar();
-                $auxiliar->IdAx = $row->IdAx;
-                $auxiliar->NombreAx = $row->NombreAx;
-                $auxiliar->UsuarioAx = $row->UsuarioAx;
-                $auxiliar->PassAx = $row->PassAx;
-                $auxiliar->idTipo = $row->idTipo;
-                $lista[] = $auxiliar;
-            }
-            return $resultado;
-        } catch (PDOException $e) {
-            return null;
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-
     public function obtenerTodosPermisos()
     {
         try {
@@ -80,38 +54,13 @@ class DaoAux
         }
     }
 
-    public function obtenerUno(){
-        try {
-            $this->conectar();
-            $obj = null;
-            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM auxiliares WHERE IdAx = ?");
-            $sentenciaSQL->execute();
-            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
-            foreach ($resultado as $row) {
-                $auxiliar = new auxiliar();
-                $auxiliar->IdAx = $row->IdAx;
-                $auxiliar->NombreAx = $row->NombreAx;
-                $auxiliar->UsuarioAx = $row->UsuarioAx;
-                $auxiliar->PassAx = $row->PassAx;
-                $auxiliar->idTipo = $row->idTipo;
-                $obj = $auxiliar;
-            }
-            return $obj;
-        } catch (PDOException $e) {
-            return null;
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-
     public function autenticarAuxiliar($usuario, $contrasena)
     {
         try {
-            $query = "SELECT IdAx, NombreAx, UsuarioAx FROM Auxiliar WHERE UsuarioAx = ? AND PassAx = SHA2(?, 224)";
+            $query = "SELECT IdAx, NombreAx, UsuarioAx FROM Auxiliares WHERE UsuarioAx = ? AND PassAx = ?";
+            $this->conectar();
             $statement = $this->conexion->prepare($query);
-            $statement->bindParam(1, $usuario);
-            $statement->bindParam(2, $contrasena);
-            $statement->execute();
+            $statement->execute([$usuario, $contrasena]);
 
             $resultado = $statement->fetch(PDO::FETCH_OBJ);
 
@@ -125,6 +74,7 @@ class DaoAux
 
             return null;
         } catch (PDOException $e) {
+            echo "Error en autenticar Auxiliar" . $e->getMessage();
             return null;
         } finally {
             Conexion::desconectar();
@@ -144,22 +94,9 @@ class DaoAux
         }
     }
 
-    public function update(){
-        try {
-            $this->conectar();
-            $sentenciaSQL = $this->conexion->prepare("UPDATE auxiliares SET NombreAx = ?, UsuarioAx = ?, PassAx = ?, idTipo = ? WHERE IdAx = ?");
-            $sentenciaSQL->execute();
-            return true;
-        } catch (PDOException $e) {
-            return false;
-        } finally {
-            Conexion::desconectar();
-        }
-    }
-
     public function insertar($obj) {
         try {
-            $sql = "INSERT INTO auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES (?, ?, sha2(?,256), ?)";
+            $sql = "INSERT INTO auxiliares (NombreAx, UsuarioAx, PassAx, idTipo) VALUES (?, ?, ?, ?)";
             $this->conectar();
             $this->conexion->prepare($sql)->execute([$obj->NombreAx, $obj->UsuarioAx, $obj->PassAx, $obj->idTipo]);
             return true;

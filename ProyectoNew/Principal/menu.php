@@ -63,49 +63,68 @@
 </head>
 
 <body>
+    <?php session_start(); ?>
     <header class="navbar">
         <nav>
             <div>
                 <ul>
                     <li><a href="../Principal/index.php">Home</a></li>
-                    <li><a href="../Login/Login.php">Inicio de Sesión</a></li>
-                    <li><a href="../Login/Registro.php">Registro</a></li>
-                    <li><a href="../Login/Equipos.php">Registra tu equipo</a></li>
-                    <li><a href="../proceso_cerrar_sesion.php">Cerrar Sesion</a></li>
+                    <?php
+                    if (!isset($_SESSION['tipo_usuario'])) {
+                        echo '<li><a href="../Login/Login.php">Inicio de Sesión</a></li>';
+                        echo '<li><a href="../Login/Registro.php">Registro</a></li>';
+                    }
+                    ?>
+
+                    
+                    <?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'coach' || $_SESSION['tipo_usuario'] === 'auxiliar' || $_SESSION['tipo_usuario'] === 'administrador')) : ?>
+                        <li><a href="../Login/Equipos.php">Registra tu equipo</a></li>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'coach') : ?>
+                        <li><a href="../Vista/ListaEquipos.php">Lista Equipos</a></li>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administrador') : ?>
+                        <button id="btnmulti" tabindex="0" type="button">
+                            <span class="MuiIconButton-label">
+                                <svg fill="white" width="26px" height="26px" viewBox="0 0 1024 1024" rotate="0">
+                                    <path d="M128 768h768v-85.332h-768v85.332zM128 554.668h768v-85.334h-768v85.334zM128 256v85.33h768v-85.33h-768z"></path>
+                                </svg>
+                            </span>
+                            <span class="MuiTouchRipple-root"></span>
+                        </button>
+                        <div class="dropdown-container" id="myDropdown">
+                            <a href="../Vista/ListaAdmin.php">Lista Administradores</a>
+                            <a href="../Vista/ListaEquipos.php">Lista Equipos</a>
+                            <a href="../Vista/ListaCoach.php">Lista Coach</a>
+                            <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a>
+                            <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a>
+                            <a href="../Vista/ListaConcursos.php">Lista Concursos</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['tipo_usuario'])) : ?>
+                        <li><a href="../Login/Procesos/proceso_cerrar.php">Cerrar Sesión</a></li>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'auxiliar') : ?>
+                        <li><a href="../Vista/ListaConcursos.php">Lista Concursos</a></li>
+                        <li><a href="../Vista/ListaEquipos.php">Lista Equipos</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </nav>
-        <button id="btnmulti" tabindex="0" type="button">
-            <span class="MuiIconButton-label">
-                <svg fill="white" width="26px" height="26px" viewBox="0 0 1024 1024" rotate="0">
-                    <path d="M128 768h768v-85.332h-768v85.332zM128 554.668h768v-85.334h-768v85.334zM128 256v85.33h768v-85.33h-768z"></path>
-                </svg>
-            </span>
-            <span class="MuiTouchRipple-root"></span>
-        </button>
-        <div class="dropdown-container" id="myDropdown">
-            <a href="../Vista/ListaAdmin.php">Lista Administradores</a>
-            <a href="../Vista/ListaEquipos.php">Lista Equipos</a>
-            <a href="../Vista/ListaCoach.php">Lista Coach</a>
-            <a href="../Vista/ListaInstituciones.php">Lista Instituciones</a>
-            <a href="../Vista/ListaAuxiliares.php">Lista Auxiliares</a>
-            <a href="../Vista/ListaConcursos.php">Lista Concursos</a>
-        </div>
     </header>
-
     <script>
         document.getElementById("btnmulti").addEventListener("click", function(e) {
             e.stopPropagation();
             toggleDropdown();
         });
-
         document.addEventListener("click", function(e) {
             var dropdownContainer = document.getElementById("myDropdown");
             if (dropdownContainer.style.width === "250px" && !dropdownContainer.contains(e.target) && e.target.id !== "btnmulti") {
                 dropdownContainer.style.width = "0";
             }
         });
-
         function toggleDropdown() {
             var dropdownContainer = document.getElementById("myDropdown");
             if (dropdownContainer.style.width === "250px") {

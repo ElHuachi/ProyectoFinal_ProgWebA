@@ -63,9 +63,6 @@
                 <label for="lugar">Lugar</label>
                 <input type="text" class="form-control" id="lugar" name="lugar" value="<?php echo $concurso->LugarC; ?>" required>
             </div>
-
-            <!-- Agrega más campos según sea necesario -->
-
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </form>
     </div>

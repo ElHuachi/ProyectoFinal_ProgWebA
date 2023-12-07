@@ -84,7 +84,6 @@ class DAOEquipos
             $sql = "DELETE FROM Equipos WHERE IdE = ?";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([$id]);
-
             // Redirige a la página de ListaEquipos después de eliminar
             header("Location: /ProyectoNew/Vista/ListaEquipos.php");
             exit();
@@ -165,6 +164,41 @@ class DAOEquipos
             exit();
         } catch (PDOException $e) {
             echo $e->getMessage();
+        } finally {
+            Conexion::desconectar();
+        }
+    }
+
+    public function obtenerEquiposPorCoach($nombreCoach)
+    {
+        try {
+            $this->conectar();
+
+            $listaEquipos = array();
+
+            $sentenciaSQL = $this->conexion->prepare("SELECT * FROM Equipos WHERE Coach = ?");
+            $sentenciaSQL->execute(array($nombreCoach));
+
+            $resultado = $sentenciaSQL->fetchAll(PDO::FETCH_OBJ);
+
+            foreach ($resultado as $row) {
+                $equipo = new Equipos();
+
+                $equipo->IdE = $row->IdE;
+                $equipo->NombreEquipo = $row->NombreEquipo;
+                $equipo->Estudiante1 = $row->Estudiante1;
+                $equipo->Estudiante2 = $row->Estudiante2;
+                $equipo->Estudiante3 = $row->Estudiante3;
+                $equipo->Coach = $row->Coach;
+                $equipo->Institucion = $row->Institucion;
+                $equipo->Aprobado = $row->Aprobado;
+
+                $listaEquipos[] = $equipo;
+            }
+
+            return $listaEquipos;
+        } catch (PDOException $e) {
+            return null;
         } finally {
             Conexion::desconectar();
         }
