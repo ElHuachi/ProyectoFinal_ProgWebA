@@ -18,6 +18,11 @@
 
 <body>
   <?php
+  session_start();
+  if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION["tipo_usuario"] !== 'administrador')) {
+    header("Location: /ProyectoNew/Login/Login.php");
+    exit();
+  }
   require('../Principal/menu.php');
   require('../datos/daoAdmin.php');
   $daoAdmin = new DaoAdmin();
@@ -39,12 +44,12 @@
         if ($data) {
           foreach ($data as $value) {
             echo "<tr><td>" . $value->idA . "</td>",
-              "<td>" . $value->UsuarioAd . "</td>",
-              "<td>" . $value->Tipo . "</td>",
-              "<td>",
-              "<button class='btn btn-danger btn-eliminar' data-id='{$value->idA}' data-usuario='{$value->UsuarioAd}'>Eliminar</button>",
-              "</td>",
-              "</tr>";
+            "<td>" . $value->UsuarioAd . "</td>",
+            "<td>" . $value->Tipo . "</td>",
+            "<td>",
+            "<button class='btn btn-danger btn-eliminar' data-id='{$value->idA}' data-usuario='{$value->UsuarioAd}'>Eliminar</button>",
+            "</td>",
+            "</tr>";
           }
         } else {
           echo "<tr><td colspan='4'>No se encontraron registros</td></tr>";
@@ -85,4 +90,5 @@
   <script src="../dt/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
   <script src="../Vista/Js/ListaAdmins.js"></script>
 </body>
+
 </html>

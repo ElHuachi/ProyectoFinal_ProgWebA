@@ -74,10 +74,12 @@
                         echo '<li><a href="../Login/Login.php">Inicio de Sesión</a></li>';
                         echo '<li><a href="../Login/Registro.php">Registro</a></li>';
                     }
+                    // echo "Tipo de Usuario: " . $_SESSION["tipo_usuario"];
+
                     ?>
 
                     
-                    <?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'coach' || $_SESSION['tipo_usuario'] === 'auxiliar' || $_SESSION['tipo_usuario'] === 'administrador')) : ?>
+                    <?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'coach')) : ?>
                         <li><a href="../Login/Equipos.php">Registra tu equipo</a></li>
                     <?php endif; ?>
 

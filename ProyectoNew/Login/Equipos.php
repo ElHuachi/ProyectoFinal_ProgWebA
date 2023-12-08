@@ -10,11 +10,10 @@
 
 <body>
     <?php
-
+    session_start();
     require_once("../datos/daoCoach.php");
     $daoCoach = new DAOCoach();
     $coaches = $daoCoach->obtenerTodos();
-    session_start();
     $nombreCoach = $_SESSION['usuario_nombre'];
     require_once('../datos/daoEquipos.php');
     error_reporting(E_ALL);
@@ -67,10 +66,10 @@
             </div>
             <div>
                 <label for="FotoEquipo">Foto:</label>
-                <input type="file" id="foto" name="FotoEquipo" accept="image/*" value="<?php echo $equipoEditar ? $equipoEditar->FotoEquipo : ''; ?>" required>
+                <input type="file" id="foto" name="FotoEquipo" accept="image/*" value="<?php echo $equipoEditar ? $equipoEditar->FotoEquipo : ''; ?>">
             </div>
             <div class="button-container">
-                <input type="button" value="<?php echo $equipoEditar ? 'Guardar' : 'Registrarse'; ?>" id="Registrar" class="submit-button" onclick="guardarEquipo();">
+            <input type="submit" value="<?php echo $equipoEditar ? 'Guardar' : 'Registrarse'; ?>" id="Registrar" class="submit-button">
                 <input type="button" value="Regresar" id="Back" class="submit-button" onclick="window.location.href='../Vista/listaEquipos.php';">
             </div>
         </form>

@@ -7,6 +7,11 @@
     <link rel="icon" href="https://lh6.googleusercontent.com/DQqOseiOF2DibeQSu3EApJu3EE7j7JIVBEiJqEcLE1ScAIBUdYfRki5lDMPRYkuTQ8VdKHnmJ6GMV9gW7y17X5AbHYBfG9e8eT-WT2q13BgJ0HiW">
 </head>
 <body>
+    <?php
+    // require __DIR__ . '../Login/Procesos/proceso_inicio.php';
+    // require('../Principal/menu.php');
+    // echo "Tipo de Usuario: " . $_SESSION["tipo_usuario"];
+    ?>
     <div class="container">
         <h1>Iniciar Sesión</h1>
         <form method="post" action="/ProyectoNew/Login/Procesos/proceso_inicio.php" class="login-form">
@@ -19,7 +24,7 @@
             <label for="correo">Correo:</label>
             <input type="text" id="correo" name="correo" required>
             <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
+            <input type="password" id="contrasena" name="contrasena"  required>
             <div class="button-container">
                 <input type="submit" value="Iniciar Sesión" id="iniciobtn" class="submit-button">
                 <input type="button" value="Regresar" id="back" class="submit-button" onclick="window.location.href='../Principal/index.php';">
@@ -28,12 +33,12 @@
 
         <?php
         if (isset($_GET['error']) && $_GET['error'] == 1) {
-            echo "<p>Error: Autenticación fallida</p>";
+            echo "<p>Error: Usuario Y/O Contraseña incorrecto</p>";
         } elseif (isset($_GET['error']) && $_GET['error'] == 2) {
             echo "<p>Error: No se recibieron datos por POST</p>";
         }
         ?>
     </div>
 </body>
-<script src="../Login/JS/validacion.js"></script>
+<!-- <script src="JS/validacion_login.js"></script> -->
 </html>

@@ -10,11 +10,15 @@
 </head>
 
 <body>
-<?php
+    <?php
     require('../Principal/menu.php');
     require('../datos/conexion.php');
     require('../datos/daoConcursos.php');
-
+    session_start();
+    if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION["tipo_usuario"] !== 'auxiliar') && $_SESSION["tipo_usuario"] !== 'administrador') {
+        header("Location: /ProyectoNew/Login/Login.php");
+        exit();
+    }
     // Verifica si se proporciona el ID del concurso a editar
     if (isset($_GET["IdC"])) {
         $idConcurso = $_GET["IdC"];

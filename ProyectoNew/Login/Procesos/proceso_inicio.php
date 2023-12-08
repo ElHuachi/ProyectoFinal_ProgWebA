@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($usuario) {
             $_SESSION['tipo_usuario'] = $tipoUsuario;
-            $_SESSION['usuario_id'] = $usuario->IdC; // Ajusta esto según tu estructura de objetos
-            $_SESSION['usuario_nombre'] = $usuario->NombreC; // Ajusta esto según tu estructura de objetos
+            $_SESSION['usuario_id'] = $usuario->IdC;
+            $_SESSION['usuario_nombre'] = $usuario->NombreC;
             header("Location: ../../Principal/index.php");
             exit();
         }
@@ -47,10 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!$usuario) {
-        header("Location: ../login.php?error=1"); // Autenticación fallida
+        header("Location: ../login.php"); // Autenticación fallida
         exit();
     }
 } else {
     header("Location: ../login.php?error=2"); // Método de solicitud no válido
     exit();
 }
+?>

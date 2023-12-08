@@ -15,6 +15,11 @@
 <body>
     <?php
     session_start();
+    if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION["tipo_usuario"] !== 'coach' && $_SESSION["tipo_usuario"] !== 'auxiliar') && $_SESSION["tipo_usuario"] !== 'administrador') {
+        header("Location: /ProyectoNew/Login/Login.php");
+        exit();
+    }
+
     require('../Principal/menu.php');
     require_once('../Datos/daoEquipos.php');
     $nombreCoach = $_SESSION['usuario_nombre'];
@@ -57,7 +62,7 @@
                             } else {
                                 echo "<button class='btn btn-danger btn-eliminar' id='btn-Eliminar-{$equipo->IdE}' data-idE='{$equipo->IdE}' data-equipo='{$equipo->NombreEquipo}'>Eliminar</button>";
                             }
-                        } elseif ($equipo->Aprobado != 1){
+                        } elseif ($equipo->Aprobado != 1) {
                             // Botón de editar solo para coach
                             echo "<button class='btn btn-primary btn-editar' data-idE='{$equipo->IdE}'>Editar</button>";
                         }

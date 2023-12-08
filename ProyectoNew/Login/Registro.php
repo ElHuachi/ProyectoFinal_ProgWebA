@@ -17,7 +17,7 @@
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
             <label for="correo">Correo (Usuario):</label>
-            <input type="email" id="correo" name="correo" required>
+            <input type="email" id="correo" name="correo" pattern="[0-9a-zA-Z]+@[a-zA-Z]+.[a-zA-Z]{3,}" required>
             <label for="contrasena">Contraseña:</label>
             <input type="password" id="contrasena" name="contrasena" required>
             <div>

@@ -15,6 +15,11 @@
     require('../Principal/menu.php');
     require_once('../datos/daoAdmin.php');
     require_once('../datos/daoAux.php');
+    session_start();
+    if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION["tipo_usuario"] !== 'auxiliar') && $_SESSION["tipo_usuario"] !== 'administrador') {
+        header("Location: /ProyectoNew/Login/Login.php");
+        exit();
+    }
     ?>
 
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
@@ -54,9 +59,9 @@
             </div>
         </div>
     </div>
-<div class="container mt-5">
-    <form id="registroForm" action="../Vista/Procesos/procesar_registro.php" method="post">
-    <div class="mb-3">
+    <div class="container mt-5">
+        <form id="registroForm" action="../Vista/Procesos/procesar_registro.php" method="post">
+            <div class="mb-3">
                 <label for="tipo_usuario" class="form-label">Selecciona el tipo de usuario:</label>
                 <select name="tipo_usuario" id="tipo_usuario" class="form-select" onchange="handleTipoUsuarioChange()" required>
                     <option value="admin">Administrador</option>
@@ -71,15 +76,15 @@
                 <label for="password" class="form-label">Contraseña:</label>
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
-        <div id="admin_fields" style="display: none;">
-        </div>
-        <div class="mb-3" id="auxiliar_fields" style="display: none;">
-            <label for="nombre_auxiliar">Nombre del Auxiliar:</label>
-            <input type="text" name="nombre_auxiliar" id="nombre_auxiliar">
-        </div>
-        <input type="button" value="Registrar" onclick="validateAndSubmit()">
-    </form>
-</div>
+            <div id="admin_fields" style="display: none;">
+            </div>
+            <div class="mb-3" id="auxiliar_fields" style="display: none;">
+                <label for="nombre_auxiliar">Nombre del Auxiliar:</label>
+                <input type="text" name="nombre_auxiliar" id="nombre_auxiliar">
+            </div>
+            <input type="button" value="Registrar" onclick="validateAndSubmit()">
+        </form>
+    </div>
     <script src="../dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
     <script src="../Vista/Js/bootstrap.bundle.min.js"></script>
     <script src="../Vista/Js/ListaUsuarios.js"></script>

@@ -13,6 +13,11 @@
 
 <body>
   <?php
+  session_start();
+  if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION["tipo_usuario"] !== 'auxiliar') && $_SESSION["tipo_usuario"] !== 'administrador') {
+    header("Location: /ProyectoNew/Login/Login.php");
+    exit();
+  }
   require('../Principal/menu.php');
   require_once('../datos/DAOCoach.php');
   $dao = new DAOCoach();

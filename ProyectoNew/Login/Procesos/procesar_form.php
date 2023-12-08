@@ -14,23 +14,28 @@ $equipo->Coach = $_POST["Coach"];
 $equipo->Institucion = $_POST["NombreI"];
 $equipo->FotoEquipo = $_POST["FotoEquipo"];
 
-// Verifica si estás editando un equipo
-$idEquipoEditar = $equipo->IdE;
+// Validar que los campos obligatorios no estén vacíos
+if (empty($equipo->NombreEquipo) || empty($equipo->Estudiante1) || empty($equipo->Estudiante2) || empty($equipo->Estudiante3) || empty($equipo->Institucion)) {
+    $message = 'Todos los campos son obligatorios. Por favor, complete todos los campos.';
+} else {
+    // Verifica si estás editando un equipo
+    $idEquipoEditar = $equipo->IdE;
 
-try {
-    $daoEquipos = new DAOEquipos();
+    try {
+        $daoEquipos = new DAOEquipos();
 
-    if ($idEquipoEditar) {
-        // Actualiza el equipo existente
-        $daoEquipos->actualizar($equipo);
-        $message = 'Equipo actualizado correctamente';
-    } else {
-        // Inserta un nuevo equipo
-        $daoEquipos->agregar($equipo);
-        $message = 'Equipo registrado correctamente';
+        if ($idEquipoEditar) {
+            // Actualiza el equipo existente
+            $daoEquipos->actualizar($equipo);
+            $message = 'Equipo actualizado correctamente';
+        } else {
+            // Inserta un nuevo equipo
+            $daoEquipos->agregar($equipo);
+            $message = 'Equipo registrado correctamente';
+        }
+    } catch (Exception $e) {
+        $message = 'Error: ' . $e->getMessage();
     }
-} catch (Exception $e) {
-    $message = 'Error: ' . $e->getMessage();
 }
 
 // Redirige a ListaEquipos con mensaje de confirmación o error

@@ -14,7 +14,9 @@
 <body>
     <?php
     session_start();
-
+    if (!isset($_SESSION["tipo_usuario"]) || ($_SESSION['tipo_usuario'] === 'administrador') && ($_SESSION['tipo_usuario'] === 'auxiliar')) {
+        header("Location: /ProyectoNew/Login/Login.php");
+    }
     require('../Principal/menu.php');
     require('../datos/daoCoach.php');
     $coachId = $_SESSION['usuario_id'];

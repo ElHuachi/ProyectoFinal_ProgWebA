@@ -9,58 +9,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST["usuario"];
     $password = $_POST["password"];
 
-    $idTipo = ($tipoUsuario === "admin") ? "Ad" : "Ax";
+    // Inicializa el mensaje por defecto
+    $message = '';
 
-    if ($tipoUsuario === "admin") {
-        $obj = new admin();
-        $obj->idTipo = $idTipo;
-        $obj->UsuarioAd = $usuario;
-        $obj->PassAd = $password;
+    if (empty($tipoUsuario) || empty($usuario) || empty($password)) {
+        // Campos obligatorios vacíos
+        $message = 'Todos los campos son obligatorios. Por favor, complete todos los campos.';
+    } else {
+        $idTipo = ($tipoUsuario === "admin") ? "Ad" : "Ax";
 
-        $daoAdmin = new DaoAdmin();
+        if ($tipoUsuario === "admin") {
+            $obj = new admin();
+            $obj->idTipo = $idTipo;
+            $obj->UsuarioAd = $usuario;
+            $obj->PassAd = $password;
 
-        try {
-            $result = $daoAdmin->insertar($obj);
+            $daoAdmin = new DaoAdmin();
 
-            if ($result) {
-                // Registro exitoso
-                $message = 'Usuario administrador registrado correctamente';
-                $redirectURL = "/ProyectoNew/Vista/ListaAdmin.php?message=" . urlencode($message);
-                header("Location: $redirectURL");
-                exit();
-            } else {
-                // Error en el registro
-                $message = 'Error al registrar el usuario administrador';
+            try {
+                $result = $daoAdmin->insertar($obj);
+
+                if ($result) {
+                    // Registro exitoso
+                    $message = 'Usuario administrador registrado correctamente';
+                    $redirectURL = "/ProyectoNew/Vista/ListaAdmin.php?message=" . urlencode($message);
+                    header("Location: $redirectURL");
+                    exit();
+                } else {
+                    // Error en el registro
+                    $message = 'Error al registrar el usuario administrador';
+                }
+            } catch (Exception $e) {
+                $message = 'Error: ' . $e->getMessage();
             }
-        } catch (Exception $e) {
-            $message = 'Error: ' . $e->getMessage();
-        }
-    } elseif ($tipoUsuario === "auxiliar") {
-        $obj = new auxiliar();
-        $obj->NombreAx = $_POST["nombreAuxiliar"];
-        $obj->UsuarioAx = $usuario;
-        $obj->PassAx = $password;
-        $obj->idTipo = $idTipo;
-
-        $daoAux = new DaoAux();
-
-        try {
-            $result = $daoAux->insertar($obj);
-
-            if ($result) {
-                // Registro exitoso
-                $message = 'Usuario auxiliar registrado correctamente';
-                $redirectURL = "/ProyectoNew/Vista/ListaAuxiliares.php?message=" . urlencode($message);
-                header("Location: $redirectURL");
-                exit();
+        } elseif ($tipoUsuario === "auxiliar") {
+            // Verifica si se proporcionó el nombreAuxiliar
+            if (empty($_POST["nombreAuxiliar"])) {
+                $message = 'El campo "Nombre Auxiliar" es obligatorio para usuarios auxiliares.';
             } else {
-                // Error en el registro
-                $message = 'Error al registrar el usuario auxiliar';
+                $obj = new auxiliar();
+                $obj->NombreAx = $_POST["nombreAuxiliar"];
+                $obj->UsuarioAx = $usuario;
+                $obj->PassAx = $password;
+                $obj->idTipo = $idTipo;
+                $daoAux = new DaoAux();
+                try {
+                    $result = $daoAux->insertar($obj);  
+                    if ($result) {
+                        // Registro exitoso
+                        $message = 'Usuario auxiliar registrado correctamente';
+                        $redirectURL = "/ProyectoNew/Vista/ListaAuxiliares.php?message=" . urlencode($message);
+                        header("Location: $redirectURL");
+                        exit();
+                    } else {
+                        // Error en el registro
+                        $message = 'Error al registrar el usuario auxiliar';
+                    }
+                } catch (Exception $e) {
+                    $message = 'Error: ' . $e->getMessage();
+                }
             }
-        } catch (Exception $e) {
-
-            $message = 'Error: ' . $e->getMessage();
         }
     }
+
+    // Redirige a la página correspondiente con el mensaje de error
+    $redirectURL = "/ProyectoNew/Vista/RegistroUsuario.php?message=" . urlencode($message);
+    header("Location: $redirectURL");
+    exit();
 }
 ?>
